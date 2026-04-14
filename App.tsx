@@ -13,10 +13,7 @@ import {
   ClosingSlide,
   EcosystemCirclesSlide,
   InteractiveDynamicSlide,
-  EvaluatorMindsetSlide,
-  ObservationTipsSlide,
-  InvestmentSlide,
-  CandidateGuideSlide
+  InvestmentSlide
 } from './components/Slides';
 
 const App: React.FC = () => {
@@ -63,14 +60,8 @@ const App: React.FC = () => {
           return <EcosystemCirclesSlide data={data} />;
         case 'interactive-dynamic':
           return <InteractiveDynamicSlide data={data} />;
-        case 'evaluator-mindset':
-          return <EvaluatorMindsetSlide data={data} />;
-        case 'observation-tips':
-          return <ObservationTipsSlide data={data} />;
         case 'investment':
           return <InvestmentSlide data={data} />;
-        case 'candidate-guide':
-          return <CandidateGuideSlide data={data} />;
         case 'closing':
           return <ClosingSlide data={data} onJumpToSlide={jumpToSlide} />;
         default:

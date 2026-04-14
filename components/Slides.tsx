@@ -705,89 +705,221 @@ export const ObjectivesSlide: React.FC<SlideProps> = ({ data }) => {
 // 8. Closing Slide
 export const ClosingSlide: React.FC<SlideProps> = ({ data, onJumpToSlide }) => {
     const { description } = data.content;
+    const [isPrinting, setIsPrinting] = useState(false);
+
+    const handlePrint = async () => {
+        setIsPrinting(true);
+        try {
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            const slidesToPrint = [7, 8, 9]; // Indices for slides 8, 9, 10 (0-indexed)
+            
+            // Create a temporary container for printing
+            const printContainer = document.createElement('div');
+            printContainer.style.position = 'absolute';
+            printContainer.style.left = '-9999px';
+            printContainer.style.top = '0';
+            printContainer.style.width = '210mm'; // A4 width
+            document.body.appendChild(printContainer);
+
+            for (let i = 0; i < slidesToPrint.length; i++) {
+                const slideIndex = slidesToPrint[i];
+                const slideData = SLIDES[slideIndex];
+                
+                // Create a slide element
+                const slideElement = document.createElement('div');
+                slideElement.style.width = '210mm';
+                slideElement.style.minHeight = '297mm';
+                slideElement.style.padding = '20mm';
+                slideElement.style.backgroundColor = 'white';
+                slideElement.style.color = 'black';
+                slideElement.style.fontFamily = 'Inter, sans-serif';
+                slideElement.style.display = 'flex';
+                slideElement.style.flexDirection = 'column';
+                slideElement.style.gap = '10mm';
+                
+                // Add title
+                const title = document.createElement('h1');
+                title.innerText = slideData.title || '';
+                title.style.fontSize = '24pt';
+                title.style.fontWeight = '900';
+                title.style.margin = '0';
+                title.style.textTransform = 'uppercase';
+                slideElement.appendChild(title);
+
+                // Add subtitle
+                if (slideData.subtitle) {
+                    const subtitle = document.createElement('h2');
+                    subtitle.innerText = slideData.subtitle;
+                    subtitle.style.fontSize = '14pt';
+                    subtitle.style.fontWeight = '700';
+                    subtitle.style.color = '#4f46e5';
+                    subtitle.style.margin = '0';
+                    subtitle.style.textTransform = 'uppercase';
+                    slideElement.appendChild(subtitle);
+                }
+
+                // Add content based on type
+                const contentDiv = document.createElement('div');
+                contentDiv.style.fontSize = '12pt';
+                contentDiv.style.lineHeight = '1.6';
+                
+                if (slideData.type === 'interactive-dynamic') {
+                    const phase = slideData.content.phase;
+                    if (phase === 1) {
+                        contentDiv.innerHTML = `
+                            <div style="margin-bottom: 10mm">
+                                <h3 style="font-weight: 800; margin-bottom: 5mm">CONSIGNA:</h3>
+                                <p>${slideData.content.consigna.replace(/\n/g, '<br>')}</p>
+                            </div>
+                            <div>
+                                <h3 style="font-weight: 800; margin-bottom: 5mm">ROLES:</h3>
+                                ${slideData.content.roles.map((r: any) => `
+                                    <div style="margin-bottom: 3mm">
+                                        <strong>${r.name} (${r.title}):</strong> ${r.desc}
+                                    </div>
+                                `).join('')}
+                            </div>
+                        `;
+                    } else {
+                        contentDiv.innerHTML = `
+                            <div style="margin-bottom: 10mm; color: #dc2626">
+                                <h3 style="font-weight: 800; margin-bottom: 5mm">${slideData.content.alertText}</h3>
+                            </div>
+                            <div>
+                                <h3 style="font-weight: 800; margin-bottom: 5mm">DESAFÍOS:</h3>
+                                ${slideData.content.cards.map((c: any) => `
+                                    <div style="margin-bottom: 5mm; border-left: 4px solid #dc2626; padding-left: 5mm">
+                                        <strong>${c.frontText}:</strong><br>${c.backText}
+                                    </div>
+                                `).join('')}
+                            </div>
+                        `;
+                    }
+                } else if (slideData.type === 'investment') {
+                    contentDiv.innerHTML = `
+                        <div style="margin-bottom: 10mm">
+                            <h3 style="font-weight: 800; margin-bottom: 5mm">PRESUPUESTO TOTAL: $${slideData.content.budget.toLocaleString()}</h3>
+                        </div>
+                        ${slideData.content.topics.map((t: any) => `
+                            <div style="margin-bottom: 8mm">
+                                <h4 style="font-weight: 800; margin-bottom: 3mm">${t.title}</h4>
+                                ${t.options.map((o: any) => `
+                                    <div style="margin-bottom: 2mm; margin-left: 5mm">
+                                        • <strong>${o.name} ($${o.price.toLocaleString()}):</strong> ${o.desc}
+                                    </div>
+                                `).join('')}
+                            </div>
+                        `).join('')}
+                    `;
+                }
+
+                slideElement.appendChild(contentDiv);
+                printContainer.appendChild(slideElement);
+
+                const canvas = await html2canvas(slideElement, { scale: 2 });
+                const imgData = canvas.toDataURL('image/png');
+                
+                if (i > 0) pdf.addPage();
+                pdf.addImage(imgData, 'PNG', 0, 0, 210, 297);
+                
+                printContainer.removeChild(slideElement);
+            }
+
+            pdf.save('Resumen_Dinamicas_fyo.pdf');
+            document.body.removeChild(printContainer);
+        } catch (error) {
+            console.error('Error generating PDF:', error);
+        } finally {
+            setIsPrinting(false);
+        }
+    };
 
     return (
         <motion.div 
-            className="flex flex-col justify-center items-center h-full text-center relative max-w-4xl mx-auto px-6 py-4 overflow-hidden" 
+            className="flex flex-col justify-center items-center h-full text-center relative max-w-5xl mx-auto px-6 py-4 overflow-hidden" 
             initial="hidden" 
             animate="show" 
             variants={containerVariants}
         >
-            {/* Celebratory Particles */}
-            {[...Array(20)].map((_, i) => (
+            {/* Background Decorative Elements */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-indigo-500/5 rounded-full blur-[120px] -z-10" />
+            
+            {/* Celebration Dots */}
+            {[...Array(15)].map((_, i) => (
                 <motion.div
                     key={i}
-                    initial={{ 
-                        x: Math.random() * 1200 - 600, 
-                        y: 400,
-                        opacity: 0,
-                        scale: 0
-                    }}
                     animate={{ 
-                        y: -600,
-                        opacity: [0, 1, 0],
-                        scale: [0, 1, 0.5],
-                        rotate: [0, 360]
+                        y: [0, -20, 0],
+                        opacity: [0.2, 0.5, 0.2],
+                        scale: [1, 1.2, 1]
                     }}
                     transition={{ 
-                        duration: 6 + Math.random() * 6,
+                        duration: 3 + Math.random() * 2,
                         repeat: Infinity,
-                        delay: Math.random() * 10,
-                        ease: "linear"
+                        delay: Math.random() * 5
                     }}
-                    className={`absolute w-1.5 h-1.5 rounded-full ${i % 3 === 0 ? 'bg-indigo-400' : i % 3 === 1 ? 'bg-emerald-400' : 'bg-amber-400'} blur-[1px]`}
+                    className="absolute w-2 h-2 rounded-full bg-indigo-400/30"
+                    style={{ 
+                        top: `${Math.random() * 100}%`, 
+                        left: `${Math.random() * 100}%` 
+                    }}
                 />
             ))}
 
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-indigo-500/5 rounded-full blur-[100px] -z-10" />
-
-            <motion.div variants={itemVariants} className="mb-12 relative z-10">
-                <motion.div 
-                    initial={{ scale: 0.8, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ delay: 0.2, type: 'spring' }}
-                    className="relative w-24 h-24 md:w-32 md:h-32 bg-slate-900 rounded-[2.5rem] md:rounded-[3rem] flex items-center justify-center text-white font-black text-2xl md:text-4xl shadow-2xl mx-auto border-4 border-white overflow-hidden group"
-                >
-                    <motion.div 
-                        animate={{ x: ['-100%', '200%'] }}
-                        transition={{ repeat: Infinity, duration: 3, ease: "linear" }}
-                        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12"
-                    />
+            <motion.div variants={itemVariants} className="mb-8 relative z-10">
+                <div className="w-20 h-20 md:w-24 md:h-24 bg-slate-900 rounded-3xl flex items-center justify-center text-white font-black text-xl md:text-2xl shadow-2xl mx-auto border-4 border-white relative overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent" />
                     fyo
-                </motion.div>
+                </div>
             </motion.div>
 
             <motion.h1 
-                layoutId="slide-title"
                 variants={itemVariants}
-                className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter text-slate-900 mb-6 leading-[0.8] drop-shadow-sm font-display uppercase"
+                className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter text-slate-900 mb-8 leading-[0.9] font-display uppercase flex items-center justify-center gap-4"
             >
-                {data.title}
+                MUCHAS GRACIAS <span className="text-4xl md:text-6xl">👏</span>
             </motion.h1>
 
-            <motion.p 
-                variants={itemVariants}
-                className="text-base md:text-lg text-slate-500 font-bold tracking-[0.3em] uppercase mb-8 opacity-70"
-            >
-                {data.subtitle}
-            </motion.p>
+            <motion.div variants={itemVariants} className="flex items-center justify-center gap-6 mb-10 w-full">
+                <div className="h-1 w-16 md:w-24 bg-indigo-600 rounded-full opacity-80" />
+                <h2 className="text-lg md:text-2xl font-black text-indigo-600 tracking-[0.4em] uppercase font-display">
+                    EQUIPO FYO
+                </h2>
+                <div className="h-1 w-16 md:w-24 bg-indigo-600 rounded-full opacity-80" />
+            </motion.div>
 
-            <motion.div variants={itemVariants} className="max-w-2xl mb-12">
-                <p className="text-lg md:text-xl text-slate-600 font-bold leading-relaxed tracking-tight">
+            <motion.div variants={itemVariants} className="max-w-3xl mb-16">
+                <p className="text-xl md:text-2xl text-slate-600 font-bold leading-relaxed tracking-tight italic">
                     {description}
                 </p>
             </motion.div>
 
-            <motion.button
-                variants={itemVariants}
-                whileHover={{ scale: 1.05, y: -5 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => onJumpToSlide && onJumpToSlide(0)}
-                className="px-12 py-5 bg-indigo-600 text-white rounded-full font-black text-sm md:text-base uppercase tracking-[0.3em] shadow-2xl shadow-indigo-200 hover:bg-indigo-700 transition-all flex items-center gap-4 group"
-            >
-                <RotateCcw size={20} className="group-hover:rotate-180 transition-transform duration-700" />
-                Reiniciar Presentación
-            </motion.button>
+            <motion.div variants={itemVariants} className="flex flex-col md:flex-row items-center gap-6 w-full justify-center">
+                <motion.button
+                    whileHover={{ scale: 1.05, y: -5 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => onJumpToSlide && onJumpToSlide(0)}
+                    className="w-full md:w-auto px-10 py-5 bg-slate-900 text-white rounded-full font-black text-xs md:text-sm uppercase tracking-[0.2em] shadow-2xl hover:bg-black transition-all flex items-center justify-center gap-4 group"
+                >
+                    <RotateCcw size={18} className="group-hover:rotate-180 transition-transform duration-700" />
+                    Reiniciar Presentación
+                </motion.button>
+
+                <motion.button
+                    whileHover={{ scale: 1.05, y: -5 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={handlePrint}
+                    disabled={isPrinting}
+                    className="w-full md:w-auto px-10 py-5 bg-white text-indigo-600 border-2 border-indigo-600 rounded-full font-black text-xs md:text-sm uppercase tracking-[0.2em] shadow-xl hover:bg-indigo-50 transition-all flex items-center justify-center gap-4 group disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                    {isPrinting ? (
+                        <div className="w-5 h-5 border-2 border-indigo-600 border-t-transparent rounded-full animate-spin" />
+                    ) : (
+                        <FileDown size={18} className="group-hover:translate-y-1 transition-transform" />
+                    )}
+                    Imprimir Resumen Dinámicas
+                </motion.button>
+            </motion.div>
         </motion.div>
     );
 };
@@ -961,192 +1093,6 @@ export const InteractiveDynamicSlide: React.FC<SlideProps> = ({ data }) => {
           </div>
         </div>
       )}
-    </motion.div>
-  );
-};
-
-// 10. Evaluator Mindset Slide
-export const EvaluatorMindsetSlide: React.FC<SlideProps> = ({ data }) => {
-  const { evaluating, mindset } = data.content;
-  return (
-    <motion.div className="flex flex-col justify-center h-full py-8 max-w-6xl mx-auto px-6" initial="hidden" animate="show" variants={containerVariants}>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
-        <motion.div variants={itemVariants}>
-          <GlassCard className="h-full p-6 md:p-8 bg-white border-white/80 shadow-2xl rounded-[2rem]">
-            <div className="flex items-center gap-3 mb-6">
-              <OrganicShape bg="bg-indigo-600" color="text-white" className="w-10 h-10">
-                <Target size={20} />
-              </OrganicShape>
-              <h3 className="text-slate-900 font-black text-[9px] uppercase tracking-[0.4em] font-display">¿Qué evaluamos realmente?</h3>
-            </div>
-            <div className="space-y-4">
-              {evaluating.map((item: string, i: number) => (
-                <div key={i} className="flex items-center gap-3 group">
-                  <div className="w-1.5 h-1.5 rounded-full bg-indigo-600 group-hover:scale-150 transition-transform shadow-[0_0_10px_rgba(79,70,229,0.4)]" />
-                  <span className="text-xs md:text-sm font-bold text-slate-800 tracking-tight">{item}</span>
-                </div>
-              ))}
-            </div>
-          </GlassCard>
-        </motion.div>
-
-        <motion.div variants={itemVariants}>
-          <GlassCard className="h-full p-6 md:p-8 bg-white border-white/80 shadow-2xl rounded-[2rem] relative overflow-hidden border border-slate-100">
-            <div className="absolute top-0 right-0 w-48 h-48 bg-indigo-500/10 rounded-full blur-3xl -mr-24 -mt-24" />
-            <div className="flex items-center gap-3 mb-6 relative z-10">
-              <OrganicShape bg="bg-indigo-500" color="text-white" className="w-10 h-10">
-                <BrainCircuit size={20} />
-              </OrganicShape>
-              <h3 className="text-indigo-600 font-black text-[9px] uppercase tracking-[0.4em] font-display">Mindset del evaluador</h3>
-            </div>
-            
-            <div className="space-y-5 relative z-10">
-              <div className="space-y-2">
-                {mindset.donts.map((item: string, i: number) => (
-                  <div key={i} className="flex items-center gap-2 text-red-700 text-[10px] md:text-xs font-bold bg-red-50 p-2 rounded-xl border border-red-100">
-                    <span className="text-base">❌</span> <span>{item}</span>
-                  </div>
-                ))}
-              </div>
-              <div className="h-px w-full bg-slate-100" />
-              <div className="space-y-2">
-                {mindset.dos.map((item: string, i: number) => (
-                  <div key={i} className="flex items-center gap-2 text-emerald-700 text-[10px] md:text-xs font-bold bg-emerald-50 p-2 rounded-xl border border-emerald-100">
-                    <span className="text-base">✅</span> <span>{item}</span>
-                  </div>
-                ))}
-              </div>
-              
-              <div className="mt-6 pt-6 border-t border-slate-100">
-                <p className="text-[9px] font-black uppercase tracking-[0.4em] text-indigo-400 mb-3">Regla de oro</p>
-                <motion.p 
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.8, duration: 1 }}
-                  className="text-xl md:text-2xl font-serif italic tracking-tight leading-tight text-slate-900"
-                >
-                  {mindset.goldenRule}
-                </motion.p>
-              </div>
-            </div>
-          </GlassCard>
-        </motion.div>
-      </div>
-    </motion.div>
-  );
-};
-
-// 11. Observation Tips Slide
-export const ObservationTipsSlide: React.FC<SlideProps> = ({ data }) => {
-  const { sections, triggerQuestions } = data.content;
-  const [activeSection, setActiveSection] = useState<number | null>(null);
-
-  return (
-    <motion.div 
-      className="flex flex-col h-full py-4 max-w-7xl mx-auto px-6 overflow-hidden" 
-      initial="hidden" 
-      animate="show" 
-      variants={containerVariants}
-    >
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 h-full items-stretch">
-        {/* Left Column: Sections List */}
-        <div className="lg:col-span-8 flex flex-col gap-4 overflow-hidden">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 overflow-y-auto pr-2 custom-scrollbar pb-4">
-            {sections.map((section: any, i: number) => (
-              <motion.div 
-                key={i} 
-                variants={itemVariants}
-                onClick={() => setActiveSection(activeSection === i ? null : i)}
-                className="cursor-pointer"
-              >
-                <GlassCard className={`p-4 transition-all duration-500 rounded-[1.5rem] border-2 ${activeSection === i ? 'bg-indigo-50 border-indigo-200 shadow-indigo-100/50' : 'bg-white/90 border-white/80 hover:border-indigo-200 shadow-sm'}`}>
-                  <div className="flex items-center justify-between gap-3">
-                    <div className="flex items-center gap-3">
-                      <div className={`w-2 h-2 rounded-full ${activeSection === i ? 'bg-indigo-600 animate-pulse' : 'bg-indigo-600'}`} />
-                      <h4 className={`font-black text-[11px] uppercase tracking-tight ${activeSection === i ? 'text-indigo-900' : 'text-slate-900'}`}>
-                        {section.title}
-                      </h4>
-                    </div>
-                    <span className={`text-xs font-black ${activeSection === i ? 'text-indigo-400' : 'text-indigo-600'}`}>
-                      {activeSection === i ? '−' : '+'}
-                    </span>
-                  </div>
-                  
-                  <AnimatePresence>
-                    {activeSection === i && (
-                      <motion.div 
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: 'auto' }}
-                        exit={{ opacity: 0, height: 0 }}
-                        className="mt-4 space-y-2 pt-4 border-t border-indigo-100"
-                      >
-                        {section.tips.map((tip: string, idx: number) => (
-                          <div key={idx} className="flex gap-2 items-start">
-                            <div className="text-indigo-400 font-black text-[10px] mt-0.5">•</div>
-                            <p className="text-[11px] font-bold leading-tight text-slate-700">{tip}</p>
-                          </div>
-                        ))}
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </GlassCard>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-
-        {/* Right Column: Trigger Questions */}
-        <div className="lg:col-span-4 flex flex-col h-full">
-          <motion.div variants={itemVariants} className="h-full">
-            <GlassCard className="h-full p-6 md:p-8 bg-white border-white/80 shadow-2xl rounded-[2rem] relative overflow-hidden border border-slate-100 flex flex-col">
-              <div className="absolute top-0 right-0 w-40 h-40 bg-indigo-500/10 rounded-full blur-3xl -mr-20 -mt-20" />
-              
-              <div className="relative z-10 mb-6">
-                <div className="flex items-center gap-3 mb-2">
-                  <motion.div 
-                    animate={{ scale: [1, 1.1, 1], rotate: [0, 3, -3, 0] }}
-                    transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
-                    className="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-indigo-500/20"
-                  >
-                    <span className="text-xl">💣</span>
-                  </motion.div>
-                  <div>
-                    <h3 className="text-slate-900 font-black text-xs md:text-sm uppercase tracking-tight leading-tight">
-                      {triggerQuestions.title}
-                    </h3>
-                    <p className="text-[8px] font-bold text-indigo-600 uppercase tracking-widest mt-0.5">
-                      {triggerQuestions.subtitle}
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="relative z-10 space-y-3 overflow-y-auto custom-scrollbar pr-1 flex-grow">
-                {triggerQuestions.questions.map((q: string, idx: number) => (
-                  <motion.div 
-                    key={idx}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.5 + idx * 0.1 }}
-                    className="p-3 bg-slate-50 rounded-xl border border-slate-100 hover:bg-indigo-50 transition-all duration-500 group cursor-default"
-                  >
-                    <p className="text-xs md:text-sm font-bold leading-relaxed text-slate-700 group-hover:text-indigo-900 transition-colors">
-                      {q}
-                    </p>
-                  </motion.div>
-                ))}
-              </div>
-
-              <div className="mt-6 pt-6 border-t border-slate-100 relative z-10">
-                <div className="flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse shadow-[0_0_10px_rgba(79,70,229,0.5)]" />
-                  <span className="text-[8px] font-black uppercase tracking-[0.3em] text-slate-400">Recurso para facilitadores</span>
-                </div>
-              </div>
-            </GlassCard>
-          </motion.div>
-        </div>
-      </div>
     </motion.div>
   );
 };

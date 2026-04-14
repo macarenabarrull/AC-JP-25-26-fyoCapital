@@ -187,170 +187,6 @@ export const SLIDES: SlideData[] = [
     }
   },
   {
-    id: 'evaluator-role',
-    type: 'evaluator-mindset',
-    title: '¿QUÉ ESTAMOS EVALUANDO REALMENTE? 🎯',
-    subtitle: 'Mindset del evaluador',
-    theme: 'light',
-    content: {
-      evaluating: [
-        'Pensamiento de negocio (rentabilidad vs cliente)',
-        'Capacidad de priorización bajo presión',
-        'Toma de decisiones en incertidumbre',
-        'Influencia y trabajo en equipo',
-        'Comunicación ejecutiva',
-        'Gestión de crisis y resiliencia'
-      ],
-      mindset: {
-        donts: [
-          'No evaluar “al que más habla”',
-          'No enamorarse de ideas creativas sin sustento',
-          'No buscar perfección técnica (son juniors)'
-        ],
-        dos: [
-          'Observar cómo piensan, no qué dicen',
-          'Detectar trade-offs (cliente vs negocio)',
-          'Evaluar comportamientos sostenidos, no momentos aislados'
-        ],
-        goldenRule: '“Si lo contrato, ¿me acompañaría a una reunión con clientes mañana?”'
-      }
-    }
-  },
-  {
-    id: 'observation-phase-1',
-    type: 'observation-tips',
-    title: '🧩 FASE 1: CONSTRUCCIÓN DEL NEGOCIO',
-    subtitle: 'Guía de observación',
-    theme: 'light',
-    content: {
-      sections: [
-        {
-          title: '🧠 Pensamiento de negocio',
-          tips: [
-            'Habla de ingresos, costos o rentabilidad (aunque sea básico)',
-            'Prioriza (ej: “no podemos hacer todo, enfoquémonos en…”)',
-            'Identifica cliente objetivo (no “para todos”)',
-            'Conecta decisiones (marca, producto, precio) con impacto en negocio'
-          ]
-        },
-        {
-          title: '🎯 Orientación a resultados',
-          tips: [
-            'Empuja a cerrar definiciones (evita discusiones infinitas)',
-            'Baja ideas a algo actionable (“ok, entonces hacemos X”)',
-            'Cuida el tiempo (advierte que se están yendo de foco)',
-            'Propone entregables concretos (ej: propuesta clara para presentar)'
-          ]
-        },
-        {
-          title: '🤝 Trabajo en equipo',
-          tips: [
-            'Escucha y retoma ideas de otros (“como dijo X, podríamos…”)',
-            'Construye sobre lo que ya está (no reinventa todo)',
-            'Facilita acuerdos cuando hay diferencias',
-            'Da espacio a otros (no monopoliza)'
-          ]
-        },
-        {
-          title: '🗣️ Influencia',
-          tips: [
-            'Logra que el equipo adopte su idea (no solo la dice)',
-            'Argumenta con lógica (no con volumen o insistencia)',
-            'Reformula para destrabar (“probemos de esta forma…”)',
-            'Lee al grupo y ajusta su approach'
-          ]
-        },
-        {
-          title: '🧩 Organización y estructuración',
-          tips: [
-            'Ordena la discusión (ej: “dividamos en 3 temas…”)',
-            'Propone método (roles, pasos, prioridades)',
-            'Resume avances parciales',
-            'Evita que el equipo se pierda en detalles irrelevantes'
-          ]
-        }
-      ],
-      triggerQuestions: {
-        title: '💣 Preguntas disparadoras para líderes',
-        subtitle: '(usarlas si el equipo se estanca o para profundizar)',
-        questions: [
-          '¿Cuál es el modelo de ingresos de esta agencia?',
-          'Si tuvieran que elegir: ¿experiencia premium o volumen?',
-          '¿Qué los hace diferentes de la competencia?',
-          '¿Dónde pierden plata en este modelo?',
-          '¿Qué decisión tomarían si solo tuvieran 1 semana para lanzar?'
-        ]
-      }
-    }
-  },
-  {
-    id: 'observation-phase-2',
-    type: 'observation-tips',
-    title: '🔥 FASE 2: GESTIÓN DE CRISIS',
-    subtitle: 'Guía de observación',
-    theme: 'light',
-    content: {
-      sections: [
-        {
-          title: '⚡ Toma de decisiones',
-          tips: [
-            'Define un curso de acción claro (aunque no sea perfecto)',
-            'No espera toda la info para avanzar',
-            'Plantea opciones y elige una',
-            'Se hace cargo de la decisión (no la patea al grupo)'
-          ]
-        },
-        {
-          title: '🧘 Manejo de presión',
-          tips: [
-            'Mantiene claridad al hablar (no se desordena)',
-            'No entra en pánico ante el problema',
-            'Sostiene foco en solución, no en el problema',
-            'Ayuda a bajar la ansiedad del equipo'
-          ]
-        },
-        {
-          title: '👤 Orientación al cliente',
-          tips: [
-            'Propone qué decirle al cliente (no solo qué hacer internamente)',
-            'Tiene en cuenta impacto reputacional',
-            'Busca soluciones concretas (alternativas, compensaciones)',
-            'Muestra empatía (no minimiza el problema)'
-          ]
-        },
-        {
-          title: '⚖️ Negociación (cliente vs negocio)',
-          tips: [
-            'Intenta balancear pérdida económica vs satisfacción del cliente',
-            'No regala todo ni se pone rígido',
-            'Propone escenarios intermedios',
-            'Piensa en el impacto a largo plazo'
-          ]
-        },
-        {
-          title: '🔄 Adaptabilidad',
-          tips: [
-            'Cambia rápido de enfoque cuando el contexto cambia',
-            'Abandona ideas iniciales sin aferrarse',
-            'Integra nueva información sin bloquearse',
-            'Reformula estrategia en caliente'
-          ]
-        }
-      ],
-      triggerQuestions: {
-        title: '💣 Preguntas disparadoras',
-        subtitle: '(gestión de crisis)',
-        questions: [
-          '¿Qué priorizan: reputación o rentabilidad?',
-          '¿Qué le dicen HOY al cliente?',
-          '¿A quién llaman primero internamente?',
-          '¿Qué decisiones son reversibles y cuáles no?',
-          '¿Cómo evitan que esto escale a algo mayor?'
-        ]
-      }
-    }
-  },
-  {
     id: 'break-cover',
     type: 'cover',
     title: '¡TOMÉMONOS UN DESCANSO! ☕',
@@ -361,11 +197,13 @@ export const SLIDES: SlideData[] = [
     }
   },
   {
-    id: 'candidate-guide',
-    type: 'candidate-guide',
-    title: '📄 GUÍA DEL CANDIDATO',
-    subtitle: 'Material descargable para la dinámica',
+    id: 'closing',
+    type: 'closing',
+    title: 'MUCHAS GRACIAS 👏',
+    subtitle: 'EQUIPO FYO',
     theme: 'light',
-    content: {}
+    content: {
+      description: '"Transformamos el futuro del agro junto a las personas que se animan a desafiar lo establecido."'
+    }
   }
 ];
