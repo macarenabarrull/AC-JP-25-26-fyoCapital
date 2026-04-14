@@ -727,7 +727,7 @@ export const ClosingSlide: React.FC<SlideProps> = ({ data, onJumpToSlide }) => {
                 const slideElement = document.createElement('div');
                 slideElement.style.width = '210mm';
                 slideElement.style.minHeight = '297mm';
-                slideElement.style.padding = '40mm 35mm'; // Even more margins
+                slideElement.style.padding = '30mm 25mm';
                 slideElement.style.backgroundColor = 'white';
                 slideElement.style.color = '#1e293b';
                 slideElement.style.fontFamily = 'Inter, sans-serif';
@@ -741,28 +741,28 @@ export const ClosingSlide: React.FC<SlideProps> = ({ data, onJumpToSlide }) => {
                 header.style.display = 'flex';
                 header.style.justifyContent = 'space-between';
                 header.style.alignItems = 'flex-end';
-                header.style.borderBottom = '5px solid #0f172a';
-                header.style.paddingBottom = '10mm';
-                header.style.marginBottom = '20mm';
+                header.style.borderBottom = '4px solid #0f172a';
+                header.style.paddingBottom = '8mm';
+                header.style.marginBottom = '12mm';
                 header.innerHTML = `
-                    <div style="display: flex; align-items: center; gap: 6mm;">
-                        <div style="background: #0f172a; color: white; padding: 5mm 8mm; border-radius: 10px; font-weight: 900; font-size: 24pt; letter-spacing: -2px; line-height: 1;">fyo</div>
-                        <div style="width: 2px; height: 12mm; background: #e2e8f0;"></div>
-                        <div style="font-weight: 800; font-size: 12pt; text-transform: uppercase; letter-spacing: 2px; color: #64748b;">Talento & Cultura</div>
+                    <div style="display: flex; align-items: center; gap: 5mm;">
+                        <div style="background: #0f172a; color: white; padding: 4mm 6mm; border-radius: 8px; font-weight: 900; font-size: 20pt; letter-spacing: -1.5px; line-height: 1;">fyo</div>
+                        <div style="width: 1.5px; height: 10mm; background: #e2e8f0;"></div>
+                        <div style="font-weight: 800; font-size: 11pt; text-transform: uppercase; letter-spacing: 1.5px; color: #64748b;">Talento & Cultura</div>
                     </div>
                     <div style="text-align: right;">
-                        <div style="font-weight: 900; font-size: 14pt; text-transform: uppercase; letter-spacing: 2.5px; color: #0f172a;">Assessment Center JP 25-26</div>
-                        <div style="font-size: 10pt; color: #94a3b8; font-weight: 700; margin-top: 3mm; text-transform: uppercase; letter-spacing: 2px;">GUÍA DEL CANDIDATO • CONFIDENCIAL</div>
+                        <div style="font-weight: 900; font-size: 12pt; text-transform: uppercase; letter-spacing: 2px; color: #0f172a;">Assessment Center JP 25-26</div>
+                        <div style="font-size: 9pt; color: #94a3b8; font-weight: 700; margin-top: 2mm; text-transform: uppercase; letter-spacing: 1.5px;">GUÍA DEL CANDIDATO • CONFIDENCIAL</div>
                     </div>
                 `;
                 slideElement.appendChild(header);
                 
-                // Title & Subtitle
+                // Title Section
                 const titleSection = document.createElement('div');
-                titleSection.style.marginBottom = '25mm';
+                titleSection.style.marginBottom = '10mm';
                 titleSection.innerHTML = `
-                    <h1 style="font-size: 42pt; font-weight: 900; margin: 0; text-transform: uppercase; color: #0f172a; letter-spacing: -3px; line-height: 1;">${slideData.title || ''}</h1>
-                    ${slideData.subtitle ? `<h2 style="font-size: 18pt; font-weight: 700; color: #4f46e5; margin: 8mm 0 0 0; text-transform: uppercase; letter-spacing: 6px; opacity: 0.9;">${slideData.subtitle}</h2>` : ''}
+                    <h1 style="font-size: 28pt; font-weight: 900; margin: 0; text-transform: uppercase; color: #0f172a; letter-spacing: -1.5px; line-height: 1;">${slideData.title || ''}</h1>
+                    ${slideData.subtitle ? `<h2 style="font-size: 12pt; font-weight: 700; color: #4f46e5; margin: 4mm 0 0 0; text-transform: uppercase; letter-spacing: 3px; opacity: 0.9;">${slideData.subtitle}</h2>` : ''}
                 `;
                 slideElement.appendChild(titleSection);
 
@@ -773,85 +773,94 @@ export const ClosingSlide: React.FC<SlideProps> = ({ data, onJumpToSlide }) => {
                 if (slideData.type === 'interactive-dynamic') {
                     const phase = slideData.content.phase;
                     if (phase === 1) {
+                        // Slide 8: Consigna + Roles + Paquetes
                         contentDiv.innerHTML = `
-                            <div style="margin-bottom: 20mm; background: #f8fafc; padding: 12mm; border-radius: 20px; border-left: 12px solid #4f46e5; box-shadow: 0 15px 25px -5px rgba(0, 0, 0, 0.05);">
-                                <h3 style="font-size: 14pt; font-weight: 900; margin-bottom: 6mm; color: #4f46e5; text-transform: uppercase; letter-spacing: 2.5px;">CONSIGNA DE TRABAJO</h3>
-                                <p style="font-size: 15pt; line-height: 1.9; font-weight: 600; color: #1e293b; margin: 0;">${slideData.content.consigna.replace(/\n/g, '<br>')}</p>
+                            <div style="margin-bottom: 10mm; background: #f8fafc; padding: 8mm; border-radius: 16px; border-left: 8px solid #4f46e5;">
+                                <h3 style="font-size: 11pt; font-weight: 900; margin-bottom: 4mm; color: #4f46e5; text-transform: uppercase; letter-spacing: 1.5px;">CONSIGNA DE TRABAJO</h3>
+                                <p style="font-size: 12pt; line-height: 1.6; font-weight: 600; color: #1e293b; margin: 0;">${slideData.content.consigna.replace(/\n/g, '<br>')}</p>
                             </div>
-                            <div style="margin-bottom: 20mm;">
-                                <h3 style="font-size: 14pt; font-weight: 900; margin-bottom: 10mm; color: #0f172a; text-transform: uppercase; letter-spacing: 2.5px;">ROLES Y RESPONSABILIDADES</h3>
-                                <div style="display: grid; grid-template-columns: 1fr; gap: 8mm;">
+
+                            <div style="margin-bottom: 10mm;">
+                                <h3 style="font-size: 11pt; font-weight: 900; margin-bottom: 6mm; color: #0f172a; text-transform: uppercase; letter-spacing: 1.5px;">ROLES Y RESPONSABILIDADES</h3>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4mm;">
                                     ${slideData.content.roles.map((r: any) => `
-                                        <div style="border: 2px solid #e2e8f0; padding: 8mm; border-radius: 20px; background: white;">
-                                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5mm;">
-                                                <div style="font-weight: 900; font-size: 15pt; color: #0f172a;">${r.name} - ${r.title}</div>
-                                                <div style="font-size: 11pt; color: #64748b; font-weight: 700; border-bottom: 3px solid #cbd5e1; width: 90mm; padding-bottom: 2.5mm;">Nombre: _________________________</div>
-                                            </div>
-                                            <p style="font-size: 12pt; color: #475569; margin: 0; line-height: 1.7;">${r.desc}</p>
+                                        <div style="border: 1.5px solid #e2e8f0; padding: 5mm; border-radius: 12px; background: white;">
+                                            <div style="font-weight: 900; font-size: 11pt; color: #0f172a; margin-bottom: 2mm;">${r.name} - ${r.title}</div>
+                                            <div style="font-size: 9pt; color: #64748b; font-weight: 700; border-bottom: 1px solid #cbd5e1; margin-bottom: 3mm; padding-bottom: 1.5mm;">Nombre y Apellido: _________________</div>
+                                            <p style="font-size: 9.5pt; color: #475569; margin: 0; line-height: 1.4;">${r.desc}</p>
                                         </div>
                                     `).join('')}
                                 </div>
                             </div>
-                            <div style="margin-top: auto; padding-top: 15mm; border-top: 3px dashed #e2e8f0;">
-                                <h3 style="font-size: 12pt; font-weight: 900; margin-bottom: 8mm; color: #94a3b8; text-transform: uppercase; letter-spacing: 2.5px;">NOTAS Y OBSERVACIONES</h3>
-                                <div style="height: 50mm; background: #fcfcfc; border: 1px solid #f1f5f9; border-radius: 16px; position: relative;">
-                                    <div style="position: absolute; top: 12mm; left: 0; right: 0; border-bottom: 1px solid #f1f5f9;"></div>
-                                    <div style="position: absolute; top: 24mm; left: 0; right: 0; border-bottom: 1px solid #f1f5f9;"></div>
-                                    <div style="position: absolute; top: 36mm; left: 0; right: 0; border-bottom: 1px solid #f1f5f9;"></div>
+
+                            <div>
+                                <h3 style="font-size: 11pt; font-weight: 900; margin-bottom: 6mm; color: #0f172a; text-transform: uppercase; letter-spacing: 1.5px;">PAQUETES DE VIAJE DISPONIBLES</h3>
+                                <div style="display: grid; grid-template-columns: 1fr; gap: 4mm;">
+                                    ${slideData.content.cards.map((c: any) => `
+                                        <div style="border: 1.5px solid #f1f5f9; padding: 5mm; border-radius: 12px; background: #f8fafc; border-left: 6px solid ${c.color.replace('bg-', '#').replace('600', '400')};">
+                                            <div style="font-weight: 900; font-size: 12pt; color: #0f172a; margin-bottom: 2mm; text-transform: uppercase;">${c.frontText}</div>
+                                            <p style="font-size: 10pt; color: #475569; margin: 0; line-height: 1.5;">${c.backText}</p>
+                                        </div>
+                                    `).join('')}
                                 </div>
                             </div>
                         `;
                     } else {
+                        // Slide 10: Aviso + Inconvenientes
                         contentDiv.innerHTML = `
-                            <div style="margin-bottom: 20mm; background: #fef2f2; padding: 12mm; border-radius: 20px; border: 4px solid #ef4444; display: flex; align-items: center; gap: 10mm; box-shadow: 0 25px 35px -10px rgba(239, 68, 68, 0.15);">
-                                <div style="background: #ef4444; color: white; width: 20mm; height: 20mm; border-radius: 12px; font-weight: 900; font-size: 30pt; display: flex; align-items: center; justify-content: center;">!</div>
-                                <h3 style="font-size: 24pt; font-weight: 900; margin: 0; color: #b91c1c; text-transform: uppercase; letter-spacing: -1.5px;">${slideData.content.alertText}</h3>
+                            <div style="margin-bottom: 12mm; background: #fef2f2; padding: 10mm; border-radius: 16px; border: 3px solid #ef4444; display: flex; align-items: center; gap: 8mm;">
+                                <div style="background: #ef4444; color: white; width: 15mm; height: 15mm; border-radius: 10px; font-weight: 900; font-size: 24pt; display: flex; align-items: center; justify-content: center;">!</div>
+                                <h3 style="font-size: 20pt; font-weight: 900; margin: 0; color: #b91c1c; text-transform: uppercase; letter-spacing: -1px;">${slideData.content.alertText}</h3>
                             </div>
-                            <div style="margin-bottom: 20mm;">
-                                <h3 style="font-size: 14pt; font-weight: 900; margin-bottom: 10mm; color: #0f172a; text-transform: uppercase; letter-spacing: 2.5px;">GESTIÓN DE CRISIS - DESAFÍOS</h3>
-                                <div style="display: grid; grid-template-columns: 1fr; gap: 12mm;">
+
+                            <div>
+                                <h3 style="font-size: 11pt; font-weight: 900; margin-bottom: 8mm; color: #0f172a; text-transform: uppercase; letter-spacing: 1.5px;">GESTIÓN DE CRISIS - INCONVENIENTES</h3>
+                                <div style="display: grid; grid-template-columns: 1fr; gap: 8mm;">
                                     ${slideData.content.cards.map((c: any) => `
-                                        <div style="border: 3px solid #fee2e2; background: #fffcfc; padding: 10mm; border-radius: 24px; border-left: 15px solid #ef4444; box-shadow: 0 15px 20px -5px rgba(0, 0, 0, 0.05);">
-                                            <div style="font-weight: 900; font-size: 18pt; color: #b91c1c; margin-bottom: 5mm; text-transform: uppercase; letter-spacing: 1.5px;">${c.frontText}</div>
-                                            <p style="font-size: 14pt; color: #334155; margin: 0; line-height: 1.9; font-style: italic; font-weight: 500;">"${c.backText}"</p>
+                                        <div style="border: 2px solid #fee2e2; background: #fffcfc; padding: 8mm; border-radius: 20px; border-left: 12px solid #ef4444;">
+                                            <div style="font-weight: 900; font-size: 16pt; color: #b91c1c; margin-bottom: 4mm; text-transform: uppercase;">${c.frontText}</div>
+                                            <p style="font-size: 12pt; color: #334155; margin: 0; line-height: 1.8; font-style: italic; font-weight: 500;">"${c.backText}"</p>
                                         </div>
                                     `).join('')}
                                 </div>
                             </div>
-                            <div style="margin-top: auto; padding-top: 15mm; border-top: 3px dashed #fee2e2;">
-                                <h3 style="font-size: 12pt; font-weight: 900; margin-bottom: 8mm; color: #fca5a5; text-transform: uppercase; letter-spacing: 2.5px;">PLAN DE ACCIÓN Y RESOLUCIONES</h3>
-                                <div style="height: 70mm; background: #fffcfc; border: 1px solid #fee2e2; border-radius: 16px; position: relative;">
-                                    ${[14, 28, 42, 56].map(top => `<div style="position: absolute; top: ${top}mm; left: 0; right: 0; border-bottom: 1px solid #fee2e2;"></div>`).join('')}
+
+                            <div style="margin-top: auto; padding-top: 10mm; border-top: 2px dashed #fee2e2;">
+                                <h3 style="font-size: 10pt; font-weight: 900; margin-bottom: 5mm; color: #fca5a5; text-transform: uppercase; letter-spacing: 2px;">NOTAS DE RESOLUCIÓN</h3>
+                                <div style="height: 40mm; background: #fffcfc; border: 1px solid #fee2e2; border-radius: 12px; position: relative;">
+                                    ${[10, 20, 30].map(top => `<div style="position: absolute; top: ${top}mm; left: 0; right: 0; border-bottom: 1px solid #fee2e2;"></div>`).join('')}
                                 </div>
                             </div>
                         `;
                     }
                 } else if (slideData.type === 'investment') {
+                    // Slide 9: Ficha Inversión + Checkbox + Globo Presupuesto
                     contentDiv.innerHTML = `
-                        <div style="margin-bottom: 20mm; background: #0f172a; color: white; padding: 15mm; border-radius: 24px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.3);">
-                            <div>
-                                <div style="font-size: 13pt; font-weight: 700; text-transform: uppercase; letter-spacing: 5px; opacity: 0.8; margin-bottom: 4mm;">Presupuesto Asignado</div>
-                                <div style="font-size: 42pt; font-weight: 900; letter-spacing: -3px;">$${slideData.content.budget.toLocaleString()}</div>
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12mm;">
+                            <div style="flex: 1;">
+                                <h3 style="font-size: 11pt; font-weight: 900; margin-bottom: 6mm; color: #0f172a; text-transform: uppercase; letter-spacing: 1.5px;">FICHA DE INVERSIÓN</h3>
+                                <p style="font-size: 10.5pt; color: #64748b; margin: 0; font-weight: 600;">Selecciona una opción por tópico marcando con una "X".</p>
                             </div>
-                            <div style="text-align: right;">
-                                <div style="font-size: 12pt; font-weight: 700; text-transform: uppercase; opacity: 0.6; letter-spacing: 3px;">AGENCIA DE VIAJES</div>
-                                <div style="font-size: 18pt; font-weight: 900; margin-top: 3mm; letter-spacing: 1.5px;">FICHA DE INVERSIÓN</div>
+                            <div style="background: #4f46e5; color: white; padding: 8mm; border-radius: 50%; width: 50mm; height: 50mm; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; box-shadow: 0 15px 30px -5px rgba(79, 70, 229, 0.3); transform: rotate(5deg);">
+                                <div style="font-size: 8pt; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; opacity: 0.8; margin-bottom: 2mm;">Presupuesto</div>
+                                <div style="font-size: 18pt; font-weight: 900;">$${slideData.content.budget.toLocaleString()}</div>
                             </div>
                         </div>
-                        <div style="display: grid; grid-template-columns: 1fr; gap: 15mm; margin-bottom: 20mm;">
+
+                        <div style="display: grid; grid-template-columns: 1fr; gap: 10mm;">
                             ${slideData.content.topics.map((t: any) => `
                                 <div>
-                                    <h4 style="font-size: 14pt; font-weight: 900; margin-bottom: 8mm; color: #0f172a; text-transform: uppercase; letter-spacing: 2.5px; border-bottom: 4px solid #f1f5f9; padding-bottom: 5mm;">${t.title}</h4>
-                                    <div style="display: grid; grid-template-columns: 1fr; gap: 6mm;">
+                                    <h4 style="font-size: 11pt; font-weight: 900; margin-bottom: 5mm; color: #0f172a; text-transform: uppercase; border-bottom: 2px solid #f1f5f9; padding-bottom: 3mm;">${t.title}</h4>
+                                    <div style="display: grid; grid-template-columns: 1fr; gap: 4mm;">
                                         ${t.options.map((o: any) => `
-                                            <div style="display: flex; align-items: flex-start; gap: 8mm; padding: 6mm; border: 3px solid #f1f5f9; border-radius: 20px; background: #f8fafc;">
-                                                <div style="width: 10mm; height: 10mm; border: 4px solid #cbd5e1; border-radius: 10px; flex-shrink: 0; margin-top: 1mm; background: white;"></div>
+                                            <div style="display: flex; align-items: flex-start; gap: 5mm; padding: 4mm; border: 1.5px solid #f1f5f9; border-radius: 12px; background: #f8fafc;">
+                                                <div style="width: 7mm; height: 7mm; border: 2.5px solid #cbd5e1; border-radius: 6px; flex-shrink: 0; margin-top: 1mm; background: white; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 12pt; color: #4f46e5;"></div>
                                                 <div style="flex: 1;">
-                                                    <div style="display: flex; justify-content: space-between; margin-bottom: 3mm;">
-                                                        <span style="font-weight: 800; font-size: 14pt; color: #0f172a;">${o.name}</span>
-                                                        <span style="font-weight: 900; font-size: 14pt; color: #4f46e5;">$${o.price.toLocaleString()}</span>
+                                                    <div style="display: flex; justify-content: space-between; margin-bottom: 1.5mm;">
+                                                        <span style="font-weight: 800; font-size: 11pt; color: #0f172a;">${o.name}</span>
+                                                        <span style="font-weight: 900; font-size: 11pt; color: #4f46e5;">$${o.price.toLocaleString()}</span>
                                                     </div>
-                                                    <p style="font-size: 12pt; color: #64748b; margin: 0; line-height: 1.8; font-weight: 500;">${o.desc}</p>
+                                                    <p style="font-size: 9pt; color: #64748b; margin: 0; line-height: 1.4; font-weight: 500;">${o.desc}</p>
                                                 </div>
                                             </div>
                                         `).join('')}
@@ -859,9 +868,10 @@ export const ClosingSlide: React.FC<SlideProps> = ({ data, onJumpToSlide }) => {
                                 </div>
                             `).join('')}
                         </div>
-                        <div style="margin-top: auto; padding: 12mm; border: 5px dashed #e2e8f0; border-radius: 24px; display: flex; justify-content: space-between; align-items: center; background: #fcfcfc;">
-                            <div style="font-weight: 900; font-size: 18pt; color: #64748b; text-transform: uppercase; letter-spacing: 2.5px;">Total Invertido: $ ___________</div>
-                            <div style="font-weight: 900; font-size: 18pt; color: #0f172a; text-transform: uppercase; letter-spacing: 2.5px;">Saldo Disponible: $ ___________</div>
+
+                        <div style="margin-top: auto; padding: 8mm; border: 3px dashed #e2e8f0; border-radius: 16px; display: flex; justify-content: space-between; align-items: center; background: #fcfcfc;">
+                            <div style="font-weight: 900; font-size: 14pt; color: #64748b; text-transform: uppercase;">Total Invertido: $ ___________</div>
+                            <div style="font-weight: 900; font-size: 14pt; color: #0f172a; text-transform: uppercase;">Saldo Disponible: $ ___________</div>
                         </div>
                     `;
                 }
@@ -870,16 +880,16 @@ export const ClosingSlide: React.FC<SlideProps> = ({ data, onJumpToSlide }) => {
 
                 // Footer
                 const footer = document.createElement('div');
-                footer.style.marginTop = '15mm';
-                footer.style.borderTop = '3px solid #f1f5f9';
-                footer.style.paddingTop = '8mm';
+                footer.style.marginTop = '10mm';
+                footer.style.borderTop = '2px solid #f1f5f9';
+                footer.style.paddingTop = '6mm';
                 footer.style.display = 'flex';
                 footer.style.justifyContent = 'space-between';
-                footer.style.fontSize = '10pt';
+                footer.style.fontSize = '9pt';
                 footer.style.fontWeight = '800';
                 footer.style.color = '#94a3b8';
                 footer.style.textTransform = 'uppercase';
-                footer.style.letterSpacing = '2px';
+                footer.style.letterSpacing = '1.5px';
                 footer.innerHTML = `
                     <div style="display: flex; align-items: center; gap: 3mm;">
                         <span style="color: #0f172a;">fyo</span>
@@ -893,11 +903,11 @@ export const ClosingSlide: React.FC<SlideProps> = ({ data, onJumpToSlide }) => {
                 printContainer.appendChild(slideElement);
 
                 const canvas = await html2canvas(slideElement, { 
-                    scale: 3, // Increased scale for better quality
+                    scale: 3,
                     useCORS: true,
                     logging: false,
                     backgroundColor: '#ffffff',
-                    windowWidth: 1200 // Force a wider window for better layout rendering
+                    windowWidth: 1200
                 });
                 const imgData = canvas.toDataURL('image/png');
                 
