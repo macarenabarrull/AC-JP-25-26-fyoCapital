@@ -47,7 +47,7 @@ export const SLIDES: SlideData[] = [
     content: {
       mainText: 'En fyo trabajamos para ofrecer respuestas innovadoras y a medida, adaptadas a cada cliente.\n\nBuscamos ser una solución personalizada, innovadora y única.\n\nAsí fue como nos animamos a ser digitales en el mercado más tradicional de Argentina.',
       description: 'Desafiamos lo establecido para potenciar el futuro del agro.',
-      highlight: 'CREAMOS VALOR EN CADA CADENA DEL AGRO 🚀'
+      highlight: 'AGREGAMOS VALOR EN TODA LA CADENA DE COMERCIALIZACIÓN AGRO 🚀'
     }
   },
   {
@@ -199,8 +199,8 @@ export const SLIDES: SlideData[] = [
   {
     id: 'closing',
     type: 'closing',
-    title: 'MUCHAS GRACIAS 👏',
-    subtitle: 'Equipo fyo | Talentos',
+    title: '¡MUCHAS GRACIAS! 👏',
+    subtitle: 'equipo fyo',
     theme: 'light',
     content: {
       description: '"Transformamos el futuro del agro junto a las personas que se animan a desafiar lo establecido."'
