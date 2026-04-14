@@ -200,7 +200,7 @@ export const SLIDES: SlideData[] = [
     id: 'closing',
     type: 'closing',
     title: 'MUCHAS GRACIAS 👏',
-    subtitle: 'EQUIPO FYO',
+    subtitle: 'Equipo fyo | Talentos',
     theme: 'light',
     content: {
       description: '"Transformamos el futuro del agro junto a las personas que se animan a desafiar lo establecido."'
