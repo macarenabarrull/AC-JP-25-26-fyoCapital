@@ -4,7 +4,7 @@ import {
   Users, Calendar, GraduationCap, FileText, Flag, Heart, 
   BrainCircuit, Zap, ClipboardCheck, PencilRuler, Search, FileSignature, 
   Rocket, BarChart3, Compass, Target, Layers, Sparkles, DollarSign, Briefcase,
-  RotateCcw, Clock, Lightbulb, Quote, AlertCircle, Newspaper, Check,
+  RotateCcw, Clock, Lightbulb, Quote, AlertCircle, Check,
   Download, FileDown
 } from 'lucide-react';
 import { motion, AnimatePresence } from "framer-motion";
@@ -727,10 +727,10 @@ export const ClosingSlide: React.FC<SlideProps> = ({ data, onJumpToSlide }) => {
                 const slideElement = document.createElement('div');
                 slideElement.style.width = '210mm';
                 slideElement.style.minHeight = '297mm';
-                slideElement.style.padding = '30mm 25mm';
+                slideElement.style.padding = '15mm 15mm';
                 slideElement.style.backgroundColor = 'white';
-                slideElement.style.color = '#1e293b';
-                slideElement.style.fontFamily = 'Inter, sans-serif';
+                slideElement.style.color = '#111827';
+                slideElement.style.fontFamily = 'Outfit, sans-serif';
                 slideElement.style.display = 'flex';
                 slideElement.style.flexDirection = 'column';
                 slideElement.style.position = 'relative';
@@ -740,32 +740,44 @@ export const ClosingSlide: React.FC<SlideProps> = ({ data, onJumpToSlide }) => {
                 const header = document.createElement('div');
                 header.style.display = 'flex';
                 header.style.justifyContent = 'space-between';
-                header.style.alignItems = 'flex-end';
-                header.style.borderBottom = '4px solid #0f172a';
-                header.style.paddingBottom = '8mm';
-                header.style.marginBottom = '12mm';
+                header.style.alignItems = 'flex-start';
+                header.style.marginBottom = '4mm';
                 header.innerHTML = `
-                    <div style="display: flex; align-items: center; gap: 5mm;">
-                        <div style="background: #0f172a; color: white; padding: 4mm 6mm; border-radius: 8px; font-weight: 900; font-size: 20pt; letter-spacing: -1.5px; line-height: 1;">fyo</div>
-                        <div style="width: 1.5px; height: 10mm; background: #e2e8f0;"></div>
-                        <div style="font-weight: 800; font-size: 11pt; text-transform: uppercase; letter-spacing: 1.5px; color: #64748b;">Talento & Cultura</div>
+                    <div style="display: flex; align-items: center; gap: 4mm;">
+                        <div style="background: #111827; color: white; width: 14mm; height: 14mm; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 16pt; letter-spacing: -1px;">fyo</div>
+                        <div>
+                            <div style="font-weight: 900; font-size: 18pt; text-transform: uppercase; letter-spacing: -0.5px; color: #111827; line-height: 1;">GUÍA DEL CANDIDATO</div>
+                            <div style="font-weight: 800; font-size: 8pt; text-transform: uppercase; letter-spacing: 1px; color: #4F46E5; margin-top: 1mm;">ASSESSMENT CENTER | DINÁMICA 2: FASE ${i === 1 ? '2' : '1'}</div>
+                        </div>
                     </div>
                     <div style="text-align: right;">
-                        <div style="font-weight: 900; font-size: 12pt; text-transform: uppercase; letter-spacing: 2px; color: #0f172a;">Assessment Center JP 25-26</div>
-                        <div style="font-size: 9pt; color: #94a3b8; font-weight: 700; margin-top: 2mm; text-transform: uppercase; letter-spacing: 1.5px;">GUÍA DEL CANDIDATO • CONFIDENCIAL</div>
+                        <div style="font-size: 7pt; color: #9CA3AF; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 2mm;">PÁGINA ${i + 1} DE ${slidesToPrint.length}</div>
+                        <div style="background: ${i === 1 ? '#FEF2F2' : '#F3F4F6'}; color: ${i === 1 ? '#EF4444' : '#9CA3AF'}; padding: 1mm 4mm; border-radius: 4px; font-weight: 900; font-size: 7pt; text-transform: uppercase; letter-spacing: 1px; display: inline-block;">
+                            ${i === 1 ? 'URGENTE' : 'CONFIDENCIAL'}
+                        </div>
                     </div>
                 `;
                 slideElement.appendChild(header);
-                
-                // Title Section
-                const titleSection = document.createElement('div');
-                titleSection.style.marginBottom = '10mm';
-                titleSection.innerHTML = `
-                    <h1 style="font-size: 28pt; font-weight: 900; margin: 0; text-transform: uppercase; color: #0f172a; letter-spacing: -1.5px; line-height: 1;">${slideData.title || ''}</h1>
-                    ${slideData.subtitle ? `<h2 style="font-size: 12pt; font-weight: 700; color: #4f46e5; margin: 4mm 0 0 0; text-transform: uppercase; letter-spacing: 3px; opacity: 0.9;">${slideData.subtitle}</h2>` : ''}
-                `;
-                slideElement.appendChild(titleSection);
 
+                // Thick Black Line
+                const line = document.createElement('div');
+                line.style.height = '1.2mm';
+                line.style.backgroundColor = '#111827';
+                line.style.width = '100%';
+                line.style.marginBottom = '6mm';
+                slideElement.appendChild(line);
+
+                // Candidate Name Section
+                const nameSection = document.createElement('div');
+                nameSection.style.marginBottom = '8mm';
+                nameSection.innerHTML = `
+                    <div style="display: flex; align-items: flex-end; gap: 3mm;">
+                        <span style="font-size: 8pt; font-weight: 900; color: #9CA3AF; text-transform: uppercase; letter-spacing: 1px; white-space: nowrap;">NOMBRE DEL CANDIDATO:</span>
+                        <div style="flex: 1; border-bottom: 1px solid #E5E7EB; height: 4mm;"></div>
+                    </div>
+                `;
+                slideElement.appendChild(nameSection);
+                
                 // Content
                 const contentDiv = document.createElement('div');
                 contentDiv.style.flex = '1';
@@ -773,94 +785,155 @@ export const ClosingSlide: React.FC<SlideProps> = ({ data, onJumpToSlide }) => {
                 if (slideData.type === 'interactive-dynamic') {
                     const phase = slideData.content.phase;
                     if (phase === 1) {
-                        // Slide 8: Consigna + Roles + Paquetes
+                        // Page 1: Construcción y Logística
                         contentDiv.innerHTML = `
-                            <div style="margin-bottom: 10mm; background: #f8fafc; padding: 8mm; border-radius: 16px; border-left: 8px solid #4f46e5;">
-                                <h3 style="font-size: 11pt; font-weight: 900; margin-bottom: 4mm; color: #4f46e5; text-transform: uppercase; letter-spacing: 1.5px;">CONSIGNA DE TRABAJO</h3>
-                                <p style="font-size: 12pt; line-height: 1.6; font-weight: 600; color: #1e293b; margin: 0;">${slideData.content.consigna.replace(/\n/g, '<br>')}</p>
+                            <div style="display: flex; align-items: center; gap: 3mm; margin-bottom: 8mm;">
+                                <div style="width: 8mm; height: 8mm; background: #4F46E5; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: white;">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+                                </div>
+                                <h2 style="font-size: 16pt; font-weight: 900; text-transform: uppercase; letter-spacing: -0.5px; margin: 0; color: #111827;">CONSTRUCCIÓN Y LOGÍSTICA</h2>
                             </div>
 
-                            <div style="margin-bottom: 10mm;">
-                                <h3 style="font-size: 11pt; font-weight: 900; margin-bottom: 6mm; color: #0f172a; text-transform: uppercase; letter-spacing: 1.5px;">ROLES Y RESPONSABILIDADES</h3>
-                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4mm;">
-                                    ${slideData.content.roles.map((r: any) => `
-                                        <div style="border: 1.5px solid #e2e8f0; padding: 5mm; border-radius: 12px; background: white;">
-                                            <div style="font-weight: 900; font-size: 11pt; color: #0f172a; margin-bottom: 2mm;">${r.name} - ${r.title}</div>
-                                            <div style="font-size: 9pt; color: #64748b; font-weight: 700; border-bottom: 1px solid #cbd5e1; margin-bottom: 3mm; padding-bottom: 1.5mm;">Nombre y Apellido: _________________</div>
-                                            <p style="font-size: 9.5pt; color: #475569; margin: 0; line-height: 1.4;">${r.desc}</p>
+                            <div style="background: #F9FAFB; border: 1px solid #F3F4F6; padding: 6mm 8mm; border-radius: 12px; margin-bottom: 8mm;">
+                                <div style="display: flex; align-items: center; gap: 3mm; margin-bottom: 3mm;">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m16.2 7.8-2 2"/><path d="m7.8 16.2 2-2"/><path d="m12 12 4-4"/><path d="m12 12-4 4"/><path d="M12 7v2"/><path d="M12 15v2"/><path d="M17 12h-2"/><path d="M9 12H7"/></svg>
+                                    <h3 style="font-size: 9pt; font-weight: 900; color: #4F46E5; text-transform: uppercase; letter-spacing: 1px; margin: 0;">CONSIGNA GENERAL</h3>
+                                </div>
+                                <p style="font-size: 11pt; line-height: 1.5; color: #374151; margin: 0; font-weight: 700; font-style: italic;">
+                                    "${slideData.content.consigna}"
+                                </p>
+                            </div>
+
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; margin-bottom: 8mm;">
+                                ${slideData.content.roles.map((r: any) => `
+                                    <div style="border: 1px solid #F3F4F6; padding: 5mm; border-radius: 12px; background: white;">
+                                        <div style="display: flex; align-items: center; gap: 2mm; margin-bottom: 2mm;">
+                                            <div style="width: 2mm; height: 2mm; background: #4F46E5; border-radius: 50%;"></div>
+                                            <div style="font-weight: 900; font-size: 10pt; color: #111827; text-transform: uppercase;">${r.title}</div>
                                         </div>
-                                    `).join('')}
+                                        <p style="font-size: 8pt; color: #6B7280; margin: 0; line-height: 1.4; font-weight: 600;">${r.desc}</p>
+                                    </div>
+                                `).join('')}
+                            </div>
+
+                            <div style="background: #F9FAFB; border: 1px solid #F3F4F6; padding: 6mm 8mm; border-radius: 12px; margin-bottom: 8mm;">
+                                <div style="display: flex; align-items: center; gap: 3mm; margin-bottom: 4mm;">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+                                    <h3 style="font-size: 9pt; font-weight: 900; color: #111827; text-transform: uppercase; letter-spacing: 1px; margin: 0;">RECOMENDACIONES PARA EL EQUIPO</h3>
+                                </div>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6mm;">
+                                    <div style="display: flex; gap: 2mm;">
+                                        <div style="width: 1.5mm; height: 1.5mm; background: #4F46E5; border-radius: 50%; margin-top: 1.5mm; flex-shrink: 0;"></div>
+                                        <p style="font-size: 8pt; color: #4B5563; font-weight: 700; line-height: 1.4; margin: 0;">El tiempo vuela. No se estanquen en elegir el nombre perfecto; el negocio tiene que avanzar.</p>
+                                    </div>
+                                    <div style="display: flex; gap: 2mm;">
+                                        <div style="width: 1.5mm; height: 1.5mm; background: #4F46E5; border-radius: 50%; margin-top: 1.5mm; flex-shrink: 0;"></div>
+                                        <p style="font-size: 8pt; color: #4B5563; font-weight: 700; line-height: 1.4; margin: 0;">Piensen en el cliente, pero protejan la rentabilidad de su agencia.</p>
+                                    </div>
+                                    <div style="display: flex; gap: 2mm;">
+                                        <div style="width: 1.5mm; height: 1.5mm; background: #4F46E5; border-radius: 50%; margin-top: 1.5mm; flex-shrink: 0;"></div>
+                                        <p style="font-size: 8pt; color: #4B5563; font-weight: 700; line-height: 1.4; margin: 0;">Escúchense. Un equipo desalineado pierde clientes.</p>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div>
-                                <h3 style="font-size: 11pt; font-weight: 900; margin-bottom: 6mm; color: #0f172a; text-transform: uppercase; letter-spacing: 1.5px;">PAQUETES DE VIAJE DISPONIBLES</h3>
-                                <div style="display: grid; grid-template-columns: 1fr; gap: 4mm;">
-                                    ${slideData.content.cards.map((c: any) => `
-                                        <div style="border: 1.5px solid #f1f5f9; padding: 5mm; border-radius: 12px; background: #f8fafc; border-left: 6px solid ${c.color.replace('bg-', '#').replace('600', '400')};">
-                                            <div style="font-weight: 900; font-size: 12pt; color: #0f172a; margin-bottom: 2mm; text-transform: uppercase;">${c.frontText}</div>
-                                            <p style="font-size: 10pt; color: #475569; margin: 0; line-height: 1.5;">${c.backText}</p>
-                                        </div>
-                                    `).join('')}
+                            <div style="margin-top: auto;">
+                                <div style="display: flex; align-items: center; gap: 3mm; margin-bottom: 4mm; border-top: 1px dashed #E5E7EB; padding-top: 6mm;">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                                    <h3 style="font-size: 8pt; font-weight: 900; color: #9CA3AF; text-transform: uppercase; letter-spacing: 1px; margin: 0;">ESPACIO PARA ANOTACIONES PERSONALES</h3>
+                                </div>
+                                <div style="display: flex; flex-direction: column; gap: 8mm;">
+                                    ${[1, 2, 3, 4, 5, 6].map(() => `<div style="border-bottom: 1px solid #F3F4F6; height: 2mm;"></div>`).join('')}
                                 </div>
                             </div>
                         `;
                     } else {
-                        // Slide 10: Aviso + Inconvenientes
+                        // Page 2: Gestión de Crisis
                         contentDiv.innerHTML = `
-                            <div style="margin-bottom: 12mm; background: #fef2f2; padding: 10mm; border-radius: 16px; border: 3px solid #ef4444; display: flex; align-items: center; gap: 8mm;">
-                                <div style="background: #ef4444; color: white; width: 15mm; height: 15mm; border-radius: 10px; font-weight: 900; font-size: 24pt; display: flex; align-items: center; justify-content: center;">!</div>
-                                <h3 style="font-size: 20pt; font-weight: 900; margin: 0; color: #b91c1c; text-transform: uppercase; letter-spacing: -1px;">${slideData.content.alertText}</h3>
-                            </div>
-
-                            <div>
-                                <h3 style="font-size: 11pt; font-weight: 900; margin-bottom: 8mm; color: #0f172a; text-transform: uppercase; letter-spacing: 1.5px;">GESTIÓN DE CRISIS - INCONVENIENTES</h3>
-                                <div style="display: grid; grid-template-columns: 1fr; gap: 8mm;">
-                                    ${slideData.content.cards.map((c: any) => `
-                                        <div style="border: 2px solid #fee2e2; background: #fffcfc; padding: 8mm; border-radius: 20px; border-left: 12px solid #ef4444;">
-                                            <div style="font-weight: 900; font-size: 16pt; color: #b91c1c; margin-bottom: 4mm; text-transform: uppercase;">${c.frontText}</div>
-                                            <p style="font-size: 12pt; color: #334155; margin: 0; line-height: 1.8; font-style: italic; font-weight: 500;">"${c.backText}"</p>
-                                        </div>
-                                    `).join('')}
+                            <div style="display: flex; align-items: center; gap: 3mm; margin-bottom: 8mm;">
+                                <div style="width: 8mm; height: 8mm; background: #EF4444; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: white;">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
                                 </div>
+                                <h2 style="font-size: 16pt; font-weight: 900; text-transform: uppercase; letter-spacing: -0.5px; margin: 0; color: #EF4444;">GESTIÓN DE CRISIS</h2>
                             </div>
 
-                            <div style="margin-top: auto; padding-top: 10mm; border-top: 2px dashed #fee2e2;">
-                                <h3 style="font-size: 10pt; font-weight: 900; margin-bottom: 5mm; color: #fca5a5; text-transform: uppercase; letter-spacing: 2px;">NOTAS DE RESOLUCIÓN</h3>
-                                <div style="height: 40mm; background: #fffcfc; border: 1px solid #fee2e2; border-radius: 12px; position: relative;">
-                                    ${[10, 20, 30].map(top => `<div style="position: absolute; top: ${top}mm; left: 0; right: 0; border-bottom: 1px solid #fee2e2;"></div>`).join('')}
+                            <div style="background: #FFF5F5; border: 1px solid #FEE2E2; padding: 6mm 8mm; border-radius: 12px; margin-bottom: 8mm;">
+                                <div style="display: flex; align-items: center; gap: 3mm; margin-bottom: 3mm;">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m13 2-2 10h3L11 22l2-10h-3l2-10z"/></svg>
+                                    <h3 style="font-size: 9pt; font-weight: 900; color: #EF4444; text-transform: uppercase; letter-spacing: 1px; margin: 0;">CONTEXTO CRÍTICO</h3>
+                                </div>
+                                <p style="font-size: 11pt; line-height: 1.5; color: #374151; margin: 0; font-weight: 700; font-style: italic;">
+                                    Durante esta fase, el equipo enfrentará situaciones imprevistas que pondrán a prueba su capacidad de reacción y toma de decisiones estratégica.
+                                </p>
+                            </div>
+
+                            <div style="display: grid; grid-template-columns: 1fr; gap: 4mm; margin-bottom: 8mm;">
+                                ${slideData.content.cards.map((c: any, idx: number) => `
+                                    <div style="display: flex; gap: 6mm; align-items: center; border: 1px solid #F3F4F6; padding: 6mm; border-radius: 16px; background: white;">
+                                        <div style="display: flex; flex-direction: column; align-items: center; gap: 2mm; width: 12mm;">
+                                            <span style="font-weight: 900; font-size: 10pt; color: #EF4444;">${idx + 1}</span>
+                                            <div style="width: 8mm; height: 8mm; background: #FFF5F5; color: #EF4444; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m13 2-2 10h3L11 22l2-10h-3l2-10z"/></svg>
+                                            </div>
+                                        </div>
+                                        <div style="flex: 1;">
+                                            <h4 style="font-weight: 900; font-size: 11pt; color: #111827; margin-bottom: 1.5mm; text-transform: uppercase;">${c.frontText}</h4>
+                                            <p style="font-size: 9pt; color: #4B5563; margin: 0; line-height: 1.5; font-style: italic; font-weight: 600;">"${c.backText}"</p>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+
+                            <div style="margin-top: auto;">
+                                <div style="display: flex; align-items: center; gap: 3mm; margin-bottom: 4mm; border-top: 1px dashed #E5E7EB; padding-top: 6mm;">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                                    <h3 style="font-size: 8pt; font-weight: 900; color: #9CA3AF; text-transform: uppercase; letter-spacing: 1px; margin: 0;">PLAN DE ACCIÓN Y RESOLUCIONES</h3>
+                                </div>
+                                <div style="display: flex; flex-direction: column; gap: 8mm;">
+                                    ${[1, 2, 3, 4, 5, 6].map(() => `<div style="border-bottom: 1px solid #F3F4F6; height: 2mm;"></div>`).join('')}
                                 </div>
                             </div>
                         `;
                     }
                 } else if (slideData.type === 'investment') {
-                    // Slide 9: Ficha Inversión + Checkbox + Globo Presupuesto
+                    // Page 3: Ficha de Inversión
                     contentDiv.innerHTML = `
-                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12mm;">
-                            <div style="flex: 1;">
-                                <h3 style="font-size: 11pt; font-weight: 900; margin-bottom: 6mm; color: #0f172a; text-transform: uppercase; letter-spacing: 1.5px;">FICHA DE INVERSIÓN</h3>
-                                <p style="font-size: 10.5pt; color: #64748b; margin: 0; font-weight: 600;">Selecciona una opción por tópico marcando con una "X".</p>
+                        <div style="display: flex; align-items: center; gap: 3mm; margin-bottom: 8mm;">
+                            <div style="width: 8mm; height: 8mm; background: #10B981; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: white;">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
                             </div>
-                            <div style="background: #4f46e5; color: white; padding: 8mm; border-radius: 50%; width: 50mm; height: 50mm; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; box-shadow: 0 15px 30px -5px rgba(79, 70, 229, 0.3); transform: rotate(5deg);">
-                                <div style="font-size: 8pt; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; opacity: 0.8; margin-bottom: 2mm;">Presupuesto</div>
-                                <div style="font-size: 18pt; font-weight: 900;">$${slideData.content.budget.toLocaleString()}</div>
+                            <h2 style="font-size: 16pt; font-weight: 900; text-transform: uppercase; letter-spacing: -0.5px; margin: 0; color: #111827;">FICHA DE INVERSIÓN</h2>
+                        </div>
+
+                        <div style="background: #F0FDF4; border: 1px solid #DCFCE7; padding: 6mm 8mm; border-radius: 12px; margin-bottom: 8mm; display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <div style="display: flex; align-items: center; gap: 3mm; margin-bottom: 2mm;">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+                                    <h3 style="font-size: 9pt; font-weight: 900; color: #10B981; text-transform: uppercase; letter-spacing: 1px; margin: 0;">PRESUPUESTO ASIGNADO</h3>
+                                </div>
+                                <p style="font-size: 10pt; color: #374151; margin: 0; font-weight: 700;">Seleccione una opción por tópico marcando con una "X".</p>
+                            </div>
+                            <div style="background: #111827; color: white; padding: 4mm 8mm; border-radius: 12px; font-weight: 900; font-size: 18pt; letter-spacing: -1px;">
+                                $${slideData.content.budget.toLocaleString()}
                             </div>
                         </div>
 
-                        <div style="display: grid; grid-template-columns: 1fr; gap: 10mm;">
+                        <div style="display: grid; grid-template-columns: 1fr; gap: 6mm;">
                             ${slideData.content.topics.map((t: any) => `
-                                <div>
-                                    <h4 style="font-size: 11pt; font-weight: 900; margin-bottom: 5mm; color: #0f172a; text-transform: uppercase; border-bottom: 2px solid #f1f5f9; padding-bottom: 3mm;">${t.title}</h4>
-                                    <div style="display: grid; grid-template-columns: 1fr; gap: 4mm;">
+                                <div style="border: 1px solid #F3F4F6; border-radius: 16px; overflow: hidden; background: white;">
+                                    <div style="background: #F9FAFB; padding: 3mm 6mm; border-bottom: 1px solid #F3F4F6;">
+                                        <h4 style="font-size: 9pt; font-weight: 900; color: #111827; text-transform: uppercase; letter-spacing: 1px; margin: 0;">${t.title}</h4>
+                                    </div>
+                                    <div style="padding: 4mm 6mm; display: grid; grid-template-columns: 1fr; gap: 3mm;">
                                         ${t.options.map((o: any) => `
-                                            <div style="display: flex; align-items: flex-start; gap: 5mm; padding: 4mm; border: 1.5px solid #f1f5f9; border-radius: 12px; background: #f8fafc;">
-                                                <div style="width: 7mm; height: 7mm; border: 2.5px solid #cbd5e1; border-radius: 6px; flex-shrink: 0; margin-top: 1mm; background: white; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 12pt; color: #4f46e5;"></div>
-                                                <div style="flex: 1;">
-                                                    <div style="display: flex; justify-content: space-between; margin-bottom: 1.5mm;">
-                                                        <span style="font-weight: 800; font-size: 11pt; color: #0f172a;">${o.name}</span>
-                                                        <span style="font-weight: 900; font-size: 11pt; color: #4f46e5;">$${o.price.toLocaleString()}</span>
+                                            <div style="display: flex; align-items: center; gap: 4mm; padding: 2mm 0;">
+                                                <div style="width: 6mm; height: 6mm; border: 2px solid #D1D5DB; border-radius: 4px; flex-shrink: 0; background: white;"></div>
+                                                <div style="flex: 1; display: flex; justify-content: space-between; align-items: center;">
+                                                    <div>
+                                                        <span style="font-weight: 800; font-size: 10pt; color: #111827;">${o.name}</span>
+                                                        <span style="font-size: 8pt; color: #9CA3AF; margin-left: 2mm; font-weight: 600;">${o.desc}</span>
                                                     </div>
-                                                    <p style="font-size: 9pt; color: #64748b; margin: 0; line-height: 1.4; font-weight: 500;">${o.desc}</p>
+                                                    <span style="font-weight: 900; font-size: 10pt; color: #4F46E5;">$${o.price.toLocaleString()}</span>
                                                 </div>
                                             </div>
                                         `).join('')}
@@ -869,9 +942,9 @@ export const ClosingSlide: React.FC<SlideProps> = ({ data, onJumpToSlide }) => {
                             `).join('')}
                         </div>
 
-                        <div style="margin-top: auto; padding: 8mm; border: 3px dashed #e2e8f0; border-radius: 16px; display: flex; justify-content: space-between; align-items: center; background: #fcfcfc;">
-                            <div style="font-weight: 900; font-size: 14pt; color: #64748b; text-transform: uppercase;">Total Invertido: $ ___________</div>
-                            <div style="font-weight: 900; font-size: 14pt; color: #0f172a; text-transform: uppercase;">Saldo Disponible: $ ___________</div>
+                        <div style="margin-top: auto; background: #111827; color: white; padding: 6mm 8mm; border-radius: 16px; display: flex; justify-content: space-between; align-items: center; margin-top: 8mm;">
+                            <div style="font-weight: 900; font-size: 11pt; text-transform: uppercase; letter-spacing: 1px;">TOTAL INVERTIDO: $ _______________</div>
+                            <div style="font-weight: 900; font-size: 11pt; text-transform: uppercase; letter-spacing: 1px;">SALDO DISPONIBLE: $ _______________</div>
                         </div>
                     `;
                 }
@@ -880,23 +953,19 @@ export const ClosingSlide: React.FC<SlideProps> = ({ data, onJumpToSlide }) => {
 
                 // Footer
                 const footer = document.createElement('div');
-                footer.style.marginTop = '10mm';
-                footer.style.borderTop = '2px solid #f1f5f9';
-                footer.style.paddingTop = '6mm';
+                footer.style.marginTop = '8mm';
+                footer.style.borderTop = '1px solid #F3F4F6';
+                footer.style.paddingTop = '4mm';
                 footer.style.display = 'flex';
                 footer.style.justifyContent = 'space-between';
-                footer.style.fontSize = '9pt';
+                footer.style.fontSize = '7pt';
                 footer.style.fontWeight = '800';
-                footer.style.color = '#94a3b8';
+                footer.style.color = '#9CA3AF';
                 footer.style.textTransform = 'uppercase';
-                footer.style.letterSpacing = '1.5px';
+                footer.style.letterSpacing = '1px';
                 footer.innerHTML = `
-                    <div style="display: flex; align-items: center; gap: 3mm;">
-                        <span style="color: #0f172a;">fyo</span>
-                        <span style="opacity: 0.5;">|</span>
-                        <span>Capital Humano</span>
-                    </div>
-                    <div>Página ${i + 1} de ${slidesToPrint.length}</div>
+                    <div>fyo Assessment Center | Dinámica 2 | Documento de Trabajo</div>
+                    <div style="color: #111827;">Propiedad de fyo - Talentos</div>
                 `;
                 slideElement.appendChild(footer);
 
@@ -917,7 +986,7 @@ export const ClosingSlide: React.FC<SlideProps> = ({ data, onJumpToSlide }) => {
                 printContainer.removeChild(slideElement);
             }
 
-            pdf.save('Guia_Candidato_AC_fyo.pdf');
+            pdf.save('Guia_Candidato_fyo_2025.pdf');
             document.body.removeChild(printContainer);
         } catch (error) {
             console.error('Error generating PDF:', error);
@@ -925,7 +994,6 @@ export const ClosingSlide: React.FC<SlideProps> = ({ data, onJumpToSlide }) => {
             setIsPrinting(false);
         }
     };
-
     return (
         <motion.div 
             className="flex flex-col justify-center items-center h-full text-center relative max-w-5xl mx-auto px-6 py-4 overflow-hidden" 
@@ -1065,6 +1133,7 @@ const FlipCard = ({ color, frontText, backText, icon: Icon = Zap }: { color: str
 
 export const InteractiveDynamicSlide: React.FC<SlideProps> = ({ data }) => {
   const { phase, consigna, alertText, cards, roles, rolesIntro } = data.content;
+  const [activeRole, setActiveRole] = useState<number | null>(null);
 
   return (
     <motion.div 
@@ -1075,72 +1144,59 @@ export const InteractiveDynamicSlide: React.FC<SlideProps> = ({ data }) => {
     >
       {phase === 1 ? (
         <div className="w-full max-w-7xl flex flex-col items-center gap-8 md:gap-10">
-          {/* Top Section: Consigna, Roles and Tips in a compact grid */}
+          {/* Top Section: Consigna and Interactive Roles */}
           <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8">
             {/* Consigna */}
-            <GlassCard className="lg:col-span-5 p-6 bg-white/90 border-white/60 shadow-xl rounded-[2rem] flex flex-col justify-center">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="p-2.5 bg-indigo-50 rounded-xl text-indigo-600 shadow-sm">
-                    <ClipboardCheck size={20} />
+            <GlassCard className="lg:col-span-5 p-8 bg-white shadow-xl rounded-[2rem] flex flex-col justify-center border-l-8 border-indigo-600">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="p-3 bg-indigo-50 rounded-2xl text-indigo-600 shadow-sm">
+                    <ClipboardCheck size={28} />
                 </div>
-                <h3 className="text-xs font-black text-slate-900 uppercase tracking-[0.3em]">Consigna de trabajo</h3>
+                <h3 className="text-sm font-black text-slate-900 uppercase tracking-[0.4em] font-display">Consigna de trabajo</h3>
               </div>
-              <p className="text-slate-700 text-xs md:text-sm leading-relaxed font-bold whitespace-pre-line border-l-4 border-indigo-100 pl-5">
+              <p className="text-slate-700 text-sm md:text-base leading-relaxed font-bold italic">
                 {consigna}
               </p>
             </GlassCard>
 
-            {/* Roles */}
-            <div className="lg:col-span-7 bg-white/90 backdrop-blur-3xl rounded-[2rem] p-6 md:p-8 border border-white shadow-2xl relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-48 h-48 bg-indigo-50 rounded-full blur-3xl -mr-24 -mt-24 opacity-40" />
-              <p className="text-slate-400 text-[9px] font-black uppercase tracking-[0.5em] mb-6 text-center relative z-10">{rolesIntro}</p>
+            {/* Interactive Roles Selector */}
+            <div className="lg:col-span-7 bg-slate-900 rounded-[2rem] p-8 border border-slate-800 shadow-2xl relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl -mr-32 -mt-32" />
+              <h4 className="text-indigo-400 text-[10px] font-black uppercase tracking-[0.5em] mb-8 text-center relative z-10">{rolesIntro}</h4>
+              
               <div className="grid grid-cols-2 gap-4 relative z-10">
                 {roles?.map((role: any, idx: number) => {
                   const Icon = IconMap[role.icon] || Users;
-                  const roleColors = [
-                    'bg-indigo-600 text-white border-indigo-400',
-                    'bg-emerald-600 text-white border-emerald-400',
-                    'bg-amber-600 text-white border-amber-400',
-                    'bg-rose-600 text-white border-rose-400'
-                  ];
-                  const colorClass = roleColors[idx % roleColors.length];
-                  const [showInfo, setShowInfo] = useState(false);
-                  
+                  const isActive = activeRole === idx;
                   return (
                     <motion.div 
-                      key={role.title} 
-                      layout
-                      onClick={() => setShowInfo(!showInfo)}
-                      className={`flex flex-col gap-3 p-4 rounded-[1.5rem] border transition-all duration-500 cursor-pointer relative overflow-hidden group/role shadow-lg ${showInfo ? 'bg-indigo-50 border-indigo-200' : 'bg-white border-slate-100 hover:border-indigo-200 hover:shadow-xl'}`}
+                        key={idx}
+                        whileHover={{ scale: 1.02 }}
+                        onClick={() => setActiveRole(isActive ? null : idx)}
+                        className={`p-4 rounded-2xl cursor-pointer transition-all duration-500 border-2 ${
+                            isActive ? 'bg-indigo-600 border-indigo-400 shadow-indigo-500/20' : 'bg-slate-800/50 border-slate-700 hover:border-slate-500'
+                        }`}
                     >
-                      <div className="flex items-center gap-4">
-                        <div className={`w-12 h-12 shrink-0 rounded-xl flex items-center justify-center ${colorClass.split(' ')[0]} ${colorClass.split(' ')[1]} group-hover/role:scale-110 transition-transform shadow-xl`}>
-                          <Icon size={24} />
+                        <div className="flex items-center gap-3">
+                            <div className={`p-2 rounded-lg ${isActive ? 'bg-white/20' : 'bg-slate-700'}`}>
+                                <Icon size={18} className="text-white" />
+                            </div>
+                            <span className="text-white font-black text-[10px] uppercase tracking-widest">{role.title}</span>
                         </div>
-                        <div className="flex flex-col min-w-0">
-                          <span className="text-slate-900 font-black text-xs md:text-sm uppercase tracking-tight leading-tight mb-0.5">{role.title}</span>
-                          <span className="text-indigo-600 font-black text-[8px] uppercase tracking-widest opacity-60">{role.name}</span>
-                        </div>
-                        <div className={`ml-auto w-6 h-6 rounded-full flex items-center justify-center transition-all ${showInfo ? 'bg-indigo-600 text-white rotate-180' : 'bg-slate-100 text-slate-400'}`}>
-                          <span className="text-sm font-black leading-none">{showInfo ? '−' : '+'}</span>
-                        </div>
-                      </div>
-
-                      <AnimatePresence mode="wait">
-                        {showInfo && (
-                          <motion.div
-                            initial={{ opacity: 0, height: 0, y: 10 }}
-                            animate={{ opacity: 1, height: 'auto', y: 0 }}
-                            exit={{ opacity: 0, height: 0, y: 10 }}
-                            transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-                            className="pt-3 border-t border-indigo-100"
-                          >
-                            <p className="text-slate-800 text-[10px] md:text-xs leading-relaxed font-bold">
-                              {role.desc}
-                            </p>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
+                        <AnimatePresence>
+                            {isActive && (
+                                <motion.div 
+                                    initial={{ height: 0, opacity: 0 }}
+                                    animate={{ height: 'auto', opacity: 1 }}
+                                    exit={{ height: 0, opacity: 0 }}
+                                    className="overflow-hidden"
+                                >
+                                    <p className="text-[10px] text-indigo-100 mt-4 leading-relaxed font-medium">
+                                        {role.desc}
+                                    </p>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
                     </motion.div>
                   );
                 })}
@@ -1148,7 +1204,7 @@ export const InteractiveDynamicSlide: React.FC<SlideProps> = ({ data }) => {
             </div>
           </div>
 
-          {/* Cards Row (Products) - Moved to bottom */}
+          {/* Cards Row (Products) */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 w-full max-w-5xl">
             {cards.map((card: any) => (
               <FlipCard key={card.id} {...card} icon={Briefcase} />
@@ -1157,28 +1213,29 @@ export const InteractiveDynamicSlide: React.FC<SlideProps> = ({ data }) => {
         </div>
       ) : (
         <div className="w-full max-w-7xl flex flex-col items-center gap-8">
-          {/* News Header - Top */}
+          {/* News Header - Top (Breaking News Style) */}
           <motion.div 
             variants={itemVariants}
-            className="w-full bg-red-600 text-white py-6 px-10 rounded-[2rem] flex items-center justify-between shadow-2xl border-b-4 border-red-800 overflow-hidden relative gap-6"
+            animate={{ 
+                boxShadow: ["0 0 0px rgba(239, 68, 68, 0)", "0 0 40px rgba(239, 68, 68, 0.4)", "0 0 0px rgba(239, 68, 68, 0)"]
+            }}
+            transition={{ repeat: Infinity, duration: 2 }}
+            className="w-full bg-red-600 text-white py-8 px-12 rounded-[2rem] flex items-center justify-between shadow-2xl border-b-8 border-red-800 overflow-hidden relative gap-8"
           >
             <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.1)_50%,transparent_75%)] bg-[length:250%_250%] animate-shimmer" />
-            <div className="flex items-center gap-6 relative z-10">
-              <div className="bg-white text-red-600 p-3 rounded-xl shadow-xl animate-pulse">
-                <AlertCircle size={32} />
+            <div className="flex items-center gap-8 relative z-10">
+              <div className="bg-white text-red-600 p-4 rounded-2xl shadow-xl animate-bounce">
+                <AlertCircle size={48} />
               </div>
-              <h2 className="text-lg md:text-2xl lg:text-3xl font-black tracking-tighter uppercase italic drop-shadow-2xl">{alertText}</h2>
-            </div>
-            <div className="flex flex-col items-end gap-1 relative z-10">
-              <div className="flex items-center gap-2 bg-black/20 px-4 py-1.5 rounded-full border border-white/10">
-                <Newspaper size={16} />
-                <span className="text-[10px] font-black tracking-[0.3em] uppercase">Flash Informativo</span>
+              <div>
+                <span className="text-[10px] font-black tracking-[0.5em] uppercase opacity-70 block mb-2">Último Momento</span>
+                <h2 className="text-3xl md:text-5xl font-black tracking-tighter uppercase italic font-display leading-none">{alertText}</h2>
               </div>
             </div>
           </motion.div>
 
           {/* News Cards Row - Bottom */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 w-full max-w-5xl">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 w-full max-w-6xl">
             {cards.map((card: any) => (
               <FlipCard key={card.id} {...card} icon={AlertCircle} />
             ))}
@@ -1692,6 +1749,58 @@ export const CandidateGuideSlide: React.FC<SlideProps> = () => {
             <div className="mt-10 pt-6 border-t border-slate-100 flex justify-between items-center">
               <p className="text-[8px] font-black uppercase tracking-widest text-slate-300">fyo Assessment Center JP 25-26 | Confidencial</p>
               <p className="text-[8px] font-black uppercase tracking-widest text-red-600 italic">Crisis Management</p>
+            </div>
+          </div>
+
+          {/* Page 3: Notes & Action Plan */}
+          <div className="pdf-page w-[210mm] min-h-[297mm] p-[15mm] flex flex-col relative overflow-hidden bg-white">
+            {/* Header */}
+            <div className="flex justify-between items-start border-b-4 border-slate-900 pb-4 mb-8">
+              <div className="flex items-center gap-4">
+                <div className="bg-slate-900 text-white px-4 py-2 font-black text-2xl rounded-lg">fyo</div>
+                <div>
+                  <h1 className="text-2xl font-black uppercase tracking-tighter leading-none">Guía del Candidato</h1>
+                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mt-1">Assessment Center | Notas y Plan de Acción</p>
+                </div>
+              </div>
+              <div className="text-right">
+                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Página 3 de 3</p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 gap-12">
+              <section>
+                <div className="flex items-center gap-2 mb-6">
+                  <PencilRuler size={16} className="text-indigo-600" />
+                  <h3 className="text-sm font-black uppercase tracking-widest">Notas y Observaciones</h3>
+                </div>
+                <div className="space-y-8">
+                  {[...Array(12)].map((_, i) => (
+                    <div key={i} className="border-b border-slate-100 h-8" />
+                  ))}
+                </div>
+              </section>
+
+              <section>
+                <div className="flex items-center gap-2 mb-6">
+                  <ClipboardCheck size={16} className="text-indigo-600" />
+                  <h3 className="text-sm font-black uppercase tracking-widest">Plan de Acción Final</h3>
+                </div>
+                <div className="space-y-8">
+                  {[...Array(8)].map((_, i) => (
+                    <div key={i} className="border-b border-slate-100 h-8" />
+                  ))}
+                </div>
+              </section>
+            </div>
+
+            <div className="mt-auto pt-10 flex justify-between items-end">
+              <div className="text-[8px] font-black uppercase tracking-widest text-slate-300">
+                fyo | Talento & Cultura
+              </div>
+              <div className="w-48 border-t-2 border-slate-900 pt-2 text-center">
+                <span className="text-[8px] font-black uppercase tracking-widest text-slate-900">Firma del Candidato</span>
+              </div>
             </div>
           </div>
         </div>
