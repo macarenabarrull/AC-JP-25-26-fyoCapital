@@ -9,9 +9,6 @@ import {
 } from 'lucide-react';
 import { motion } from "framer-motion";
 import { SLIDES } from '../constants';
-import { jsPDF } from 'jspdf';
-import html2canvas from 'html2canvas';
-
 interface SlideProps {
   data: SlideData;
   onPrint?: () => void;
@@ -711,6 +708,8 @@ export const ClosingSlide: React.FC<SlideProps> = ({ data, onJumpToSlide }) => {
     const handlePrint = async () => {
         setIsPrinting(true);
         try {
+            const { jsPDF } = await import('jspdf');
+            const html2canvas = (await import('html2canvas')).default;
             const pdf = new jsPDF('p', 'mm', 'a4');
             const slidesToPrint = [8, 9, 10]; // New indices for slides 9, 10, 11 (Workbook)
             
@@ -1334,6 +1333,8 @@ export const CandidateGuideSlide: React.FC<SlideProps> = () => {
     setIsGenerating(true);
     
     try {
+      const { jsPDF } = await import('jspdf');
+      const html2canvas = (await import('html2canvas')).default;
       const element = document.getElementById('pdf-content');
       if (!element) {
         throw new Error('PDF content element not found');
