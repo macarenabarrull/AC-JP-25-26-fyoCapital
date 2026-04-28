@@ -13,12 +13,13 @@ export const SLIDES: SlideData[] = [
   {
     id: 'cover',
     type: 'cover',
-    title: 'PROGRAMA JP 25-26 🚀',
+    title: 'PROGRAMA DE MERCADO DE CAPITALES 🚀',
     subtitle: 'assessment center',
     theme: 'brand',
     content: {
       highlight: 'fyo',
-      tags: ['Somos un equipo', 'Creamos oportunidades', 'Pensamos en grande']
+      tags: ['Somos un equipo', 'Creamos oportunidades', 'Pensamos en grande'],
+      noItalics: true
     }
   },
   {
@@ -30,11 +31,10 @@ export const SLIDES: SlideData[] = [
     content: {
       headers: ['Horario', 'Actividad', 'Duración'],
       rows: [
-        ['09:30 - 09:45', 'PRESENTACIÓN INSTITUCIONAL DE FYO', '15 min'],
-        ['09:45 - 10:30', 'DINÁMICA 1: DIME QUIÉN ERES...', '45 min'],
-        ['10:30 - 12:15', 'DINÁMICA 2: TURBULENCIA EN LA OFICINA', '105 min'],
-        ['12:15 - 12:35', '¡TOMÉMONOS UN DESCANSO!', '20 min'],
-        ['12:35 - 12:55', 'ENTREVISTAS INDIVIDUALES', '20 min']
+        ['09:15 - 09:30', 'PRESENTACIÓN INSTITUCIONAL DE FYO', '15 min'],
+        ['09:30 - 10:10', 'DINÁMICA 1: DIME QUIÉN ERES...', '40 min'],
+        ['10:10 - 10:20', '¡TOMÉMONOS UN DESCANSO!', '10 min'],
+        ['10:20 - 11:20', 'DINÁMICA 2: TURBULENCIA EN LA OFICINA', '60 min']
       ]
     }
   },
@@ -106,6 +106,16 @@ export const SLIDES: SlideData[] = [
     }
   },
   {
+    id: 'break-cover',
+    type: 'cover',
+    title: '¡TOMÉMONOS UN DESCANSO! ☕',
+    theme: 'light',
+    content: {
+      highlight: 'Break',
+      tags: ['Café ☕', 'Networking 🤝']
+    }
+  },
+  {
     id: 'dinamica-2',
     type: 'interactive-dynamic',
     title: 'DINÁMICA 2: TURBULENCIA EN LA OFICINA 🏢',
@@ -113,13 +123,13 @@ export const SLIDES: SlideData[] = [
     theme: 'light',
     content: {
       phase: 1,
-      consigna: '¡Bienvenido!\nAcaban de fundar su propia agencia de viajes. Tienen 30 minutos para definir la identidad de su marca (Nombre y Eslogan) y estructurar la logística del gran viaje de su temporada.',
-      rolesIntro: 'Para que la agencia funcione, cada miembro del equipo debe asumir obligatoriamente uno de los siguientes roles. Elijan sabiamente quién ocupa cada silla:',
+      consigna: '¡Bienvenido!\nAcaban de fundar su propia agencia de viajes. Tienen 20 minutos para definir la identidad de su marca (Nombre y Eslogan) y estructurar la logística del gran viaje de su temporada.',
+      rolesIntro: 'Selecciona un rol para ver sus responsabilidades:',
       roles: [
-        { name: 'CEO', title: 'Director Comercial', desc: 'Toma la decisión final si hay empate. Es la cara visible de la empresa y quien lidera la presentación.', icon: 'Users' },
-        { name: 'CMO', title: 'Director de Marketing', desc: 'El guardián de la marca. Su objetivo es definir cómo la marca conecta con el público, lidera la estrategia de ventas, precios y productos.', icon: 'DollarSign' },
-        { name: 'COO', title: 'Director de Operaciones', desc: 'El encargado de la logística. Habla con proveedores, aerolíneas, hoteles y busca alternativas si un vuelo se cancela o un hotel cierra.', icon: 'Layers' },
-        { name: 'CCO', title: 'Director de Comunicación', desc: 'El responsable de hablar con los clientes. Tiene que tener el tacto para calmar a la gente enojada y venderles soluciones alternativas.', icon: 'Mail' }
+        { title: 'Director Comercial', desc: 'Toma la decisión final si hay empate. Es la cara visible de la empresa y quien lidera la presentación.', icon: 'Briefcase' },
+        { title: 'Director de Marketing', desc: 'El guardián de la marca. Su objetivo es definir cómo la marca conecta con el público, lidera la estrategia de ventas, precios y productos.', icon: 'Target' },
+        { title: 'Director de Operaciones', desc: 'El encargado de la logística. Habla con proveedores, aerolíneas, hoteles y busca alternativas si un vuelo se cancela o un hotel cierra.', icon: 'Rocket' },
+        { title: 'Director de Comunicación', desc: 'El responsable de hablar con los clientes. Tiene que tener el tacto para calmar a la gente enojada y venderles soluciones alternativas.', icon: 'Users' }
       ],
       tips: [
         'El tiempo vuela. No se estanquen en elegir el nombre perfecto; el negocio tiene que avanzar.',
@@ -129,7 +139,8 @@ export const SLIDES: SlideData[] = [
       cards: [
         { id: 1, color: 'bg-indigo-600', frontText: 'Fiebre mundialista', backText: 'Viaje a Estados Unidos para el Mundial. Paquete premium que incluye entradas a 3 partidos, hoteles 5 estrellas y traslados internos.' },
         { id: 2, color: 'bg-emerald-600', frontText: 'Aventura exótica', backText: 'Viaje al Sudeste Asiático (Tailandia, Vietnam, Bali). Paquete enfocado en turismo aventura, espiritualidad y playas paradisíacas por 21 días.' },
-        { id: 3, color: 'bg-amber-600', frontText: 'Lujo europeo', backText: 'Un tour súper exclusivo por Europa (París, Alpes Suizos, Roma) diseñado para 50 clientes VIP de altísimo poder adquisitivo (CEOs, celebridades).' }
+        { id: 3, color: 'bg-amber-600', frontText: 'Lujo europeo', backText: 'Un tour súper exclusivo por Europa (París, Alpes Suizos, Roma) diseñado para 50 clientes VIP de altísimo poder adquisitivo (CEOs, celebridades).' },
+        { id: 4, color: 'bg-blue-600', frontText: 'EL NORTE RECUERDA', backText: 'Travesía premium en el Tren a las Nubes y Salinas Grandes para un grupo de 20 inversores suizos. Incluye vagón exclusivo, pernocte en hoteles de sal y traslados privados en convoy 4x4.' }
       ]
     }
   },
@@ -182,18 +193,9 @@ export const SLIDES: SlideData[] = [
       cards: [
         { id: 1, color: 'bg-red-600', frontText: 'Fiebre mundialista', backText: 'Tensión geopolítica extrema. Irán insinúa un posible atentado en las sedes del Mundial. Las aerolíneas están cancelando vuelos por precaución, el pánico es generalizado y los clientes están saturando las líneas exigiendo garantías de seguridad.' },
         { id: 2, color: 'bg-red-700', frontText: 'Aventura exótica', backText: 'Estalla un conflicto bélico relámpago en una región vecina que cierra el espacio aéreo de dos de los tres países del paquete. El 80% de los clientes exige la baja inmediata y el reembolso total, pero sus proveedores locales (hoteles y guías) no aceptan devoluciones.' },
-        { id: 3, color: 'bg-red-800', frontText: 'Lujo europeo', backText: 'Un apagón informático global masivo paraliza el sistema financiero y de radares europeos. Sus 50 clientes VIP están varados en el Aeropuerto de Ezeiza; no hay vuelos, las tarjetas de crédito corporativas de la agencia no pasan para emitir reservas de emergencia y los clientes están furiosos amenazando con demandas millonarias.' }
+        { id: 3, color: 'bg-red-800', frontText: 'Lujo europeo', backText: 'Un apagón informático global masivo paraliza el sistema financiero y de radares europeos. Sus 50 clientes VIP están varados en el Aeropuerto de Ezeiza; no hay vuelos, las tarjetas de crédito corporativas de la agencia no pasan para emitir reservas de emergencia y los clientes están furiosos amenazando con demandas millonarias.' },
+        { id: 4, color: 'bg-red-900', frontText: 'EL NORTE RECUERDA', backText: 'Un conflicto violento por el litio estalla en Salinas Grandes. Comunidades bloquean el salar y confiscan las 4x4 de los inversores como medida de presión. La policía se retira y los clientes quedan bajo el sol extremo, rodeados de manifestantes que los asocian con las mineras. Exigen que la agencia medie ante el gobierno o no los dejarán salir.' }
       ]
-    }
-  },
-  {
-    id: 'break-cover',
-    type: 'cover',
-    title: '¡TOMÉMONOS UN DESCANSO! ☕',
-    theme: 'light',
-    content: {
-      highlight: 'Break',
-      tags: ['Café ☕', 'Networking 🤝']
     }
   },
   {

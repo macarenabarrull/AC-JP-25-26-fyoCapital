@@ -166,8 +166,9 @@ export const CoverSlide: React.FC<SlideProps> = ({ data }) => {
                     const isSpecial = word.toUpperCase().includes('JP') || word.toUpperCase().includes('FYO') || word.toUpperCase().includes('ASSESSMENT');
                     const hasEmoji = /\p{Emoji}/u.test(word);
                     const colorClass = isAssessment ? 'text-blue-400' : isBreak ? 'text-amber-600' : 'text-indigo-600';
+                    const shouldItalicize = !data.content?.noItalics && i % 2 === 1 && !isSpecial && !hasEmoji;
                     return (
-                        <span key={i} className={i % 2 === 1 && !isSpecial && !hasEmoji ? `italic ${colorClass} font-serif lowercase` : ''}>
+                        <span key={i} className={shouldItalicize ? `italic ${colorClass} font-serif lowercase` : ''}>
                             {word}{' '}
                         </span>
                     );
@@ -711,7 +712,7 @@ export const ClosingSlide: React.FC<SlideProps> = ({ data, onJumpToSlide }) => {
         setIsPrinting(true);
         try {
             const pdf = new jsPDF('p', 'mm', 'a4');
-            const slidesToPrint = [7, 8, 9]; // Indices for slides 8, 9, 10
+            const slidesToPrint = [8, 9, 10]; // New indices for slides 9, 10, 11 (Workbook)
             
             const printContainer = document.createElement('div');
             printContainer.style.position = 'absolute';
@@ -785,70 +786,64 @@ export const ClosingSlide: React.FC<SlideProps> = ({ data, onJumpToSlide }) => {
                 if (slideData.type === 'interactive-dynamic') {
                     const phase = slideData.content.phase;
                     if (phase === 1) {
-                        // Page 1: Construcción y Logística
+                        // Page 1: Construcción y Logística + Paquetes
                         contentDiv.innerHTML = `
-                            <div style="display: flex; align-items: center; gap: 3mm; margin-bottom: 8mm;">
+                            <div style="display: flex; align-items: center; gap: 3mm; margin-bottom: 6mm;">
                                 <div style="width: 8mm; height: 8mm; background: #4F46E5; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: white;">
                                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
                                 </div>
-                                <h2 style="font-size: 16pt; font-weight: 900; text-transform: uppercase; letter-spacing: -0.5px; margin: 0; color: #111827;">CONSTRUCCIÓN Y LOGÍSTICA</h2>
+                                <h2 style="font-size: 14pt; font-weight: 900; text-transform: uppercase; letter-spacing: -0.5px; margin: 0; color: #111827;">CONSTRUCCIÓN Y LOGÍSTICA</h2>
                             </div>
 
-                            <div style="background: #F9FAFB; border: 1px solid #F3F4F6; padding: 6mm 8mm; border-radius: 12px; margin-bottom: 8mm;">
-                                <div style="display: flex; align-items: center; gap: 3mm; margin-bottom: 3mm;">
-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m16.2 7.8-2 2"/><path d="m7.8 16.2 2-2"/><path d="m12 12 4-4"/><path d="m12 12-4 4"/><path d="M12 7v2"/><path d="M12 15v2"/><path d="M17 12h-2"/><path d="M9 12H7"/></svg>
-                                    <h3 style="font-size: 9pt; font-weight: 900; color: #4F46E5; text-transform: uppercase; letter-spacing: 1px; margin: 0;">CONSIGNA GENERAL</h3>
+                            <div style="background: #F9FAFB; border: 1px solid #F3F4F6; padding: 4mm 6mm; border-radius: 10px; margin-bottom: 6mm;">
+                                <div style="display: flex; align-items: center; gap: 3mm; margin-bottom: 2mm;">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m16.2 7.8-2 2"/><path d="m7.8 16.2 2-2"/><path d="m12 12 4-4"/><path d="m12 12-4 4"/><path d="M12 7v2"/><path d="M12 15v2"/><path d="M17 12h-2"/><path d="M9 12H7"/></svg>
+                                    <h3 style="font-size: 8pt; font-weight: 900; color: #4F46E5; text-transform: uppercase; letter-spacing: 1px; margin: 0;">CONSIGNA GENERAL</h3>
                                 </div>
-                                <p style="font-size: 11pt; line-height: 1.5; color: #374151; margin: 0; font-weight: 700; font-style: italic;">
+                                <p style="font-size: 10pt; line-height: 1.4; color: #374151; margin: 0; font-weight: 700; font-style: italic;">
                                     "${slideData.content.consigna}"
                                 </p>
                             </div>
 
-                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; margin-bottom: 8mm;">
-                                ${slideData.content.roles.map((r: any) => `
-                                    <div style="border: 1px solid #F3F4F6; padding: 5mm; border-radius: 12px; background: white;">
-                                        <div style="display: flex; align-items: center; gap: 2mm; margin-bottom: 2mm;">
-                                            <div style="width: 2mm; height: 2mm; background: #4F46E5; border-radius: 50%;"></div>
-                                            <div style="font-weight: 900; font-size: 10pt; color: #111827; text-transform: uppercase;">${r.title}</div>
+                            <div style="margin-bottom: 6mm;">
+                                <h3 style="font-size: 8pt; font-weight: 900; color: #111827; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 3mm;">ESTRUCTURA DE ROLES</h3>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3mm;">
+                                    ${slideData.content.roles.map((r: any) => `
+                                        <div style="border: 1px solid #F3F4F6; padding: 4mm; border-radius: 10px; background: white;">
+                                            <div style="display: flex; align-items: center; gap: 2mm; margin-bottom: 1.5mm;">
+                                                <div style="width: 1.5mm; height: 1.5mm; background: #4F46E5; border-radius: 50%;"></div>
+                                                <div style="font-weight: 900; font-size: 9pt; color: #111827; text-transform: uppercase;">${r.title}</div>
+                                            </div>
+                                            <p style="font-size: 7.5pt; color: #6B7280; margin: 0; line-height: 1.3; font-weight: 600;">${r.desc}</p>
                                         </div>
-                                        <p style="font-size: 8pt; color: #6B7280; margin: 0; line-height: 1.4; font-weight: 600;">${r.desc}</p>
-                                    </div>
-                                `).join('')}
+                                    `).join('')}
+                                </div>
                             </div>
 
-                            <div style="background: #F9FAFB; border: 1px solid #F3F4F6; padding: 6mm 8mm; border-radius: 12px; margin-bottom: 8mm;">
-                                <div style="display: flex; align-items: center; gap: 3mm; margin-bottom: 4mm;">
-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
-                                    <h3 style="font-size: 9pt; font-weight: 900; color: #111827; text-transform: uppercase; letter-spacing: 1px; margin: 0;">RECOMENDACIONES PARA EL EQUIPO</h3>
-                                </div>
-                                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6mm;">
-                                    <div style="display: flex; gap: 2mm;">
-                                        <div style="width: 1.5mm; height: 1.5mm; background: #4F46E5; border-radius: 50%; margin-top: 1.5mm; flex-shrink: 0;"></div>
-                                        <p style="font-size: 8pt; color: #4B5563; font-weight: 700; line-height: 1.4; margin: 0;">El tiempo vuela. No se estanquen en elegir el nombre perfecto; el negocio tiene que avanzar.</p>
-                                    </div>
-                                    <div style="display: flex; gap: 2mm;">
-                                        <div style="width: 1.5mm; height: 1.5mm; background: #4F46E5; border-radius: 50%; margin-top: 1.5mm; flex-shrink: 0;"></div>
-                                        <p style="font-size: 8pt; color: #4B5563; font-weight: 700; line-height: 1.4; margin: 0;">Piensen en el cliente, pero protejan la rentabilidad de su agencia.</p>
-                                    </div>
-                                    <div style="display: flex; gap: 2mm;">
-                                        <div style="width: 1.5mm; height: 1.5mm; background: #4F46E5; border-radius: 50%; margin-top: 1.5mm; flex-shrink: 0;"></div>
-                                        <p style="font-size: 8pt; color: #4B5563; font-weight: 700; line-height: 1.4; margin: 0;">Escúchense. Un equipo desalineado pierde clientes.</p>
-                                    </div>
+                            <div style="margin-bottom: 6mm;">
+                                <h3 style="font-size: 8pt; font-weight: 900; color: #111827; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 3mm;">PAQUETES TURÍSTICOS DISPONIBLES</h3>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3mm;">
+                                    ${slideData.content.cards.map((c: any) => `
+                                        <div style="border: 1px solid #F3F4F6; padding: 4mm; border-radius: 10px; background: #F9FAFB; border-left: 3px solid #4F46E5;">
+                                            <div style="font-weight: 900; font-size: 9pt; color: #111827; text-transform: uppercase; margin-bottom: 1.5mm;">${c.frontText}</div>
+                                            <p style="font-size: 7.5pt; color: #4B5563; margin: 0; line-height: 1.3; font-weight: 600;">${c.backText}</p>
+                                        </div>
+                                    `).join('')}
                                 </div>
                             </div>
 
                             <div style="margin-top: auto;">
-                                <div style="display: flex; align-items: center; gap: 3mm; margin-bottom: 4mm; border-top: 1px dashed #E5E7EB; padding-top: 6mm;">
-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                                <div style="display: flex; align-items: center; gap: 3mm; margin-bottom: 3mm; border-top: 1px dashed #E5E7EB; padding-top: 4mm;">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                                     <h3 style="font-size: 8pt; font-weight: 900; color: #9CA3AF; text-transform: uppercase; letter-spacing: 1px; margin: 0;">ESPACIO PARA ANOTACIONES PERSONALES</h3>
                                 </div>
-                                <div style="display: flex; flex-direction: column; gap: 8mm;">
-                                    ${[1, 2, 3, 4, 5, 6].map(() => `<div style="border-bottom: 1px solid #F3F4F6; height: 2mm;"></div>`).join('')}
+                                <div style="display: flex; flex-direction: column; gap: 6mm;">
+                                    ${[1, 2, 3, 4].map(() => `<div style="border-bottom: 1px solid #F3F4F6; height: 1mm;"></div>`).join('')}
                                 </div>
                             </div>
                         `;
                     } else {
-                        // Page 2: Gestión de Crisis
+                        // Page 3: Gestión de Crisis
                         contentDiv.innerHTML = `
                             <div style="display: flex; align-items: center; gap: 3mm; margin-bottom: 8mm;">
                                 <div style="width: 8mm; height: 8mm; background: #EF4444; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: white;">
@@ -869,16 +864,16 @@ export const ClosingSlide: React.FC<SlideProps> = ({ data, onJumpToSlide }) => {
 
                             <div style="display: grid; grid-template-columns: 1fr; gap: 4mm; margin-bottom: 8mm;">
                                 ${slideData.content.cards.map((c: any, idx: number) => `
-                                    <div style="display: flex; gap: 6mm; align-items: center; border: 1px solid #F3F4F6; padding: 6mm; border-radius: 16px; background: white;">
-                                        <div style="display: flex; flex-direction: column; align-items: center; gap: 2mm; width: 12mm;">
-                                            <span style="font-weight: 900; font-size: 10pt; color: #EF4444;">${idx + 1}</span>
-                                            <div style="width: 8mm; height: 8mm; background: #FFF5F5; color: #EF4444; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
-                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m13 2-2 10h3L11 22l2-10h-3l2-10z"/></svg>
+                                    <div style="display: flex; gap: 5mm; align-items: center; border: 1px solid #F3F4F6; padding: 5mm; border-radius: 16px; background: white;">
+                                        <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5mm; width: 10mm;">
+                                            <span style="font-weight: 900; font-size: 9pt; color: #EF4444;">${idx + 1}</span>
+                                            <div style="width: 7mm; height: 7mm; background: #FFF5F5; color: #EF4444; border-radius: 6px; display: flex; align-items: center; justify-content: center;">
+                                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m13 2-2 10h3L11 22l2-10h-3l2-10z"/></svg>
                                             </div>
                                         </div>
                                         <div style="flex: 1;">
-                                            <h4 style="font-weight: 900; font-size: 11pt; color: #111827; margin-bottom: 1.5mm; text-transform: uppercase;">${c.frontText}</h4>
-                                            <p style="font-size: 9pt; color: #4B5563; margin: 0; line-height: 1.5; font-style: italic; font-weight: 600;">"${c.backText}"</p>
+                                            <h4 style="font-weight: 900; font-size: 10pt; color: #111827; margin-bottom: 1mm; text-transform: uppercase;">${c.frontText}</h4>
+                                            <p style="font-size: 8.5pt; color: #4B5563; margin: 0; line-height: 1.4; font-style: italic; font-weight: 600;">"${c.backText}"</p>
                                         </div>
                                     </div>
                                 `).join('')}
@@ -889,8 +884,8 @@ export const ClosingSlide: React.FC<SlideProps> = ({ data, onJumpToSlide }) => {
                                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                                     <h3 style="font-size: 8pt; font-weight: 900; color: #9CA3AF; text-transform: uppercase; letter-spacing: 1px; margin: 0;">PLAN DE ACCIÓN Y RESOLUCIONES</h3>
                                 </div>
-                                <div style="display: flex; flex-direction: column; gap: 8mm;">
-                                    ${[1, 2, 3, 4, 5, 6].map(() => `<div style="border-bottom: 1px solid #F3F4F6; height: 2mm;"></div>`).join('')}
+                                <div style="display: flex; flex-direction: column; gap: 6mm;">
+                                    ${[1, 2, 3, 4].map(() => `<div style="border-bottom: 1px solid #F3F4F6; height: 1mm;"></div>`).join('')}
                                 </div>
                             </div>
                         `;
@@ -1147,7 +1142,7 @@ export const InteractiveDynamicSlide: React.FC<SlideProps> = ({ data }) => {
           {/* Top Section: Consigna and Interactive Roles */}
           <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8">
             {/* Consigna */}
-            <GlassCard className="lg:col-span-5 p-8 bg-white shadow-xl rounded-[2rem] flex flex-col justify-center border-l-8 border-indigo-600">
+            <GlassCard className={`${roles ? 'lg:col-span-5' : 'lg:col-span-12'} p-8 bg-white shadow-xl rounded-[2rem] flex flex-col justify-center border-l-8 border-indigo-600`}>
               <div className="flex items-center gap-4 mb-6">
                 <div className="p-3 bg-indigo-50 rounded-2xl text-indigo-600 shadow-sm">
                     <ClipboardCheck size={28} />
@@ -1160,52 +1155,54 @@ export const InteractiveDynamicSlide: React.FC<SlideProps> = ({ data }) => {
             </GlassCard>
 
             {/* Interactive Roles Selector */}
-            <div className="lg:col-span-7 bg-slate-900 rounded-[2rem] p-8 border border-slate-800 shadow-2xl relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl -mr-32 -mt-32" />
-              <h4 className="text-indigo-400 text-[10px] font-black uppercase tracking-[0.5em] mb-8 text-center relative z-10">{rolesIntro}</h4>
-              
-              <div className="grid grid-cols-2 gap-4 relative z-10">
-                {roles?.map((role: any, idx: number) => {
-                  const Icon = IconMap[role.icon] || Users;
-                  const isActive = activeRole === idx;
-                  return (
-                    <motion.div 
-                        key={idx}
-                        whileHover={{ scale: 1.02 }}
-                        onClick={() => setActiveRole(isActive ? null : idx)}
-                        className={`p-4 rounded-2xl cursor-pointer transition-all duration-500 border-2 ${
-                            isActive ? 'bg-indigo-600 border-indigo-400 shadow-indigo-500/20' : 'bg-slate-800/50 border-slate-700 hover:border-slate-500'
-                        }`}
-                    >
-                        <div className="flex items-center gap-3">
-                            <div className={`p-2 rounded-lg ${isActive ? 'bg-white/20' : 'bg-slate-700'}`}>
-                                <Icon size={18} className="text-white" />
-                            </div>
-                            <span className="text-white font-black text-[10px] uppercase tracking-widest">{role.title}</span>
-                        </div>
-                        <AnimatePresence>
-                            {isActive && (
-                                <motion.div 
-                                    initial={{ height: 0, opacity: 0 }}
-                                    animate={{ height: 'auto', opacity: 1 }}
-                                    exit={{ height: 0, opacity: 0 }}
-                                    className="overflow-hidden"
-                                >
-                                    <p className="text-[10px] text-indigo-100 mt-4 leading-relaxed font-medium">
-                                        {role.desc}
-                                    </p>
-                                </motion.div>
-                            )}
-                        </AnimatePresence>
-                    </motion.div>
-                  );
-                })}
+            {roles && (
+              <div className="lg:col-span-7 bg-slate-900 rounded-[2rem] p-8 border border-slate-800 shadow-2xl relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl -mr-32 -mt-32" />
+                <h4 className="text-indigo-400 text-[10px] font-black uppercase tracking-[0.5em] mb-8 text-center relative z-10">{rolesIntro}</h4>
+                
+                <div className="grid grid-cols-2 gap-4 relative z-10">
+                  {roles?.map((role: any, idx: number) => {
+                    const Icon = IconMap[role.icon] || Users;
+                    const isActive = activeRole === idx;
+                    return (
+                      <motion.div 
+                          key={idx}
+                          whileHover={{ scale: 1.02 }}
+                          onClick={() => setActiveRole(isActive ? null : idx)}
+                          className={`p-4 rounded-2xl cursor-pointer transition-all duration-500 border-2 ${
+                              isActive ? 'bg-indigo-600 border-indigo-400 shadow-indigo-500/20' : 'bg-slate-800/50 border-slate-700 hover:border-slate-500'
+                          }`}
+                      >
+                          <div className="flex items-center gap-3">
+                              <div className={`p-2 rounded-lg ${isActive ? 'bg-white/20' : 'bg-slate-700'}`}>
+                                  <Icon size={18} className="text-white" />
+                              </div>
+                              <span className="text-white font-black text-[10px] uppercase tracking-widest">{role.title}</span>
+                          </div>
+                          <AnimatePresence>
+                              {isActive && (
+                                  <motion.div 
+                                      initial={{ height: 0, opacity: 0 }}
+                                      animate={{ height: 'auto', opacity: 1 }}
+                                      exit={{ height: 0, opacity: 0 }}
+                                      className="overflow-hidden"
+                                  >
+                                      <p className="text-[10px] text-indigo-100 mt-4 leading-relaxed font-medium">
+                                          {role.desc}
+                                      </p>
+                                  </motion.div>
+                              )}
+                          </AnimatePresence>
+                      </motion.div>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
+            )}
           </div>
 
           {/* Cards Row (Products) */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 w-full max-w-5xl">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 w-full max-w-7xl">
             {cards.map((card: any) => (
               <FlipCard key={card.id} {...card} icon={Briefcase} />
             ))}
@@ -1235,7 +1232,7 @@ export const InteractiveDynamicSlide: React.FC<SlideProps> = ({ data }) => {
           </motion.div>
 
           {/* News Cards Row - Bottom */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 w-full max-w-6xl">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 w-full max-w-7xl">
             {cards.map((card: any) => (
               <FlipCard key={card.id} {...card} icon={AlertCircle} />
             ))}

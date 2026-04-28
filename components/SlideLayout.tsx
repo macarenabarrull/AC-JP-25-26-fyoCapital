@@ -301,7 +301,7 @@ export const SlideLayout: React.FC<SlideLayoutProps> = ({
           </div>
           <div className="h-6 md:h-8 w-px bg-slate-200/60 mx-1"></div>
           <div className="flex flex-col leading-tight">
-             <span className="text-[8px] md:text-[10px] font-black tracking-[0.2em] md:tracking-[0.3em] text-slate-900 uppercase">Jóvenes Profesionales</span>
+             <span className="text-[8px] md:text-[10px] font-black tracking-[0.2em] md:tracking-[0.3em] text-slate-900 uppercase">Programa fyoCapital</span>
              <span className="text-[7px] md:text-[8px] text-slate-400 font-bold tracking-widest uppercase">Assessment Center</span>
           </div>
         </motion.div>
