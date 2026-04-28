@@ -7,7 +7,7 @@ import {
   RotateCcw, Clock, Lightbulb, Quote, AlertCircle, Check,
   Download, FileDown
 } from 'lucide-react';
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { SLIDES } from '../constants';
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
@@ -746,17 +746,17 @@ export const ClosingSlide: React.FC<SlideProps> = ({ data, onJumpToSlide }) => {
                 header.innerHTML = `
                     <div style="display: flex; align-items: center; gap: 4mm;">
                         <div style="background: #111827; color: white; width: 14mm; height: 14mm; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 16pt; letter-spacing: -1px;">fyo</div>
-                        <div>
-                            <div style="font-weight: 900; font-size: 18pt; text-transform: uppercase; letter-spacing: -0.5px; color: #111827; line-height: 1;">GUÍA DEL CANDIDATO</div>
-                            <div style="font-weight: 800; font-size: 8pt; text-transform: uppercase; letter-spacing: 1px; color: #4F46E5; margin-top: 1mm;">ASSESSMENT CENTER | DINÁMICA 2: FASE ${i === 1 ? '2' : '1'}</div>
-                        </div>
-                    </div>
-                    <div style="text-align: right;">
-                        <div style="font-size: 7pt; color: #9CA3AF; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 2mm;">PÁGINA ${i + 1} DE ${slidesToPrint.length}</div>
-                        <div style="background: ${i === 1 ? '#FEF2F2' : '#F3F4F6'}; color: ${i === 1 ? '#EF4444' : '#9CA3AF'}; padding: 1mm 4mm; border-radius: 4px; font-weight: 900; font-size: 7pt; text-transform: uppercase; letter-spacing: 1px; display: inline-block;">
-                            ${i === 1 ? 'URGENTE' : 'CONFIDENCIAL'}
-                        </div>
-                    </div>
+                <div>
+                    <div style="font-weight: 900; font-size: 18pt; text-transform: uppercase; letter-spacing: -0.5px; color: #111827; line-height: 1;">GUÍA DEL CANDIDATO</div>
+                    <div style="font-weight: 800; font-size: 8pt; text-transform: uppercase; letter-spacing: 1px; color: #4F46E5; margin-top: 1mm;">ASSESSMENT CENTER | ${i === 0 ? 'DINÁMICA 2: FASE 1' : i === 1 ? 'FICHA DE INVERSIÓN' : 'DINÁMICA 2: FASE 2'}</div>
+                </div>
+            </div>
+            <div style="text-align: right;">
+                <div style="font-size: 7pt; color: #9CA3AF; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 2mm;">PÁGINA ${i + 1} DE ${slidesToPrint.length}</div>
+                <div style="background: ${i === 2 ? '#FEF2F2' : '#F3F4F6'}; color: ${i === 2 ? '#EF4444' : '#9CA3AF'}; padding: 1mm 4mm; border-radius: 4px; font-weight: 900; font-size: 7pt; text-transform: uppercase; letter-spacing: 1px; display: inline-block;">
+                    ${i === 2 ? 'URGENTE' : 'CONFIDENCIAL'}
+                </div>
+            </div>
                 `;
                 slideElement.appendChild(header);
 
@@ -803,21 +803,6 @@ export const ClosingSlide: React.FC<SlideProps> = ({ data, onJumpToSlide }) => {
                                 <p style="font-size: 10pt; line-height: 1.4; color: #374151; margin: 0; font-weight: 700; font-style: italic;">
                                     "${slideData.content.consigna}"
                                 </p>
-                            </div>
-
-                            <div style="margin-bottom: 6mm;">
-                                <h3 style="font-size: 8pt; font-weight: 900; color: #111827; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 3mm;">ESTRUCTURA DE ROLES</h3>
-                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3mm;">
-                                    ${slideData.content.roles.map((r: any) => `
-                                        <div style="border: 1px solid #F3F4F6; padding: 4mm; border-radius: 10px; background: white;">
-                                            <div style="display: flex; align-items: center; gap: 2mm; margin-bottom: 1.5mm;">
-                                                <div style="width: 1.5mm; height: 1.5mm; background: #4F46E5; border-radius: 50%;"></div>
-                                                <div style="font-weight: 900; font-size: 9pt; color: #111827; text-transform: uppercase;">${r.title}</div>
-                                            </div>
-                                            <p style="font-size: 7.5pt; color: #6B7280; margin: 0; line-height: 1.3; font-weight: 600;">${r.desc}</p>
-                                        </div>
-                                    `).join('')}
-                                </div>
                             </div>
 
                             <div style="margin-bottom: 6mm;">
@@ -1127,8 +1112,7 @@ const FlipCard = ({ color, frontText, backText, icon: Icon = Zap }: { color: str
 };
 
 export const InteractiveDynamicSlide: React.FC<SlideProps> = ({ data }) => {
-  const { phase, consigna, alertText, cards, roles, rolesIntro } = data.content;
-  const [activeRole, setActiveRole] = useState<number | null>(null);
+  const { phase, consigna, alertText, cards } = data.content;
 
   return (
     <motion.div 
@@ -1138,71 +1122,23 @@ export const InteractiveDynamicSlide: React.FC<SlideProps> = ({ data }) => {
       variants={containerVariants}
     >
       {phase === 1 ? (
-        <div className="w-full max-w-7xl flex flex-col items-center gap-8 md:gap-10">
-          {/* Top Section: Consigna and Interactive Roles */}
-          <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8">
-            {/* Consigna */}
-            <GlassCard className={`${roles ? 'lg:col-span-5' : 'lg:col-span-12'} p-8 bg-white shadow-xl rounded-[2rem] flex flex-col justify-center border-l-8 border-indigo-600`}>
-              <div className="flex items-center gap-4 mb-6">
-                <div className="p-3 bg-indigo-50 rounded-2xl text-indigo-600 shadow-sm">
-                    <ClipboardCheck size={28} />
-                </div>
-                <h3 className="text-sm font-black text-slate-900 uppercase tracking-[0.4em] font-display">Consigna de trabajo</h3>
+        <div className="w-full max-w-7xl flex flex-col items-center gap-8 md:gap-12">
+          {/* Consigna - Full Width */}
+          <GlassCard className="w-full max-w-4xl p-8 md:p-12 bg-white shadow-xl rounded-[2.5rem] flex flex-col justify-center border-l-8 border-indigo-600 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-50 rounded-full -mr-16 -mt-16 blur-2xl opacity-50" />
+            <div className="flex items-center gap-4 mb-6 relative z-10">
+              <div className="p-3 bg-indigo-50 rounded-2xl text-indigo-600 shadow-sm">
+                  <ClipboardCheck size={32} />
               </div>
-              <p className="text-slate-700 text-sm md:text-base leading-relaxed font-bold italic">
-                {consigna}
-              </p>
-            </GlassCard>
-
-            {/* Interactive Roles Selector */}
-            {roles && (
-              <div className="lg:col-span-7 bg-slate-900 rounded-[2rem] p-8 border border-slate-800 shadow-2xl relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl -mr-32 -mt-32" />
-                <h4 className="text-indigo-400 text-[10px] font-black uppercase tracking-[0.5em] mb-8 text-center relative z-10">{rolesIntro}</h4>
-                
-                <div className="grid grid-cols-2 gap-4 relative z-10">
-                  {roles?.map((role: any, idx: number) => {
-                    const Icon = IconMap[role.icon] || Users;
-                    const isActive = activeRole === idx;
-                    return (
-                      <motion.div 
-                          key={idx}
-                          whileHover={{ scale: 1.02 }}
-                          onClick={() => setActiveRole(isActive ? null : idx)}
-                          className={`p-4 rounded-2xl cursor-pointer transition-all duration-500 border-2 ${
-                              isActive ? 'bg-indigo-600 border-indigo-400 shadow-indigo-500/20' : 'bg-slate-800/50 border-slate-700 hover:border-slate-500'
-                          }`}
-                      >
-                          <div className="flex items-center gap-3">
-                              <div className={`p-2 rounded-lg ${isActive ? 'bg-white/20' : 'bg-slate-700'}`}>
-                                  <Icon size={18} className="text-white" />
-                              </div>
-                              <span className="text-white font-black text-[10px] uppercase tracking-widest">{role.title}</span>
-                          </div>
-                          <AnimatePresence>
-                              {isActive && (
-                                  <motion.div 
-                                      initial={{ height: 0, opacity: 0 }}
-                                      animate={{ height: 'auto', opacity: 1 }}
-                                      exit={{ height: 0, opacity: 0 }}
-                                      className="overflow-hidden"
-                                  >
-                                      <p className="text-[10px] text-indigo-100 mt-4 leading-relaxed font-medium">
-                                          {role.desc}
-                                      </p>
-                                  </motion.div>
-                              )}
-                          </AnimatePresence>
-                      </motion.div>
-                    );
-                  })}
-                </div>
-              </div>
-            )}
-          </div>
+              <h3 className="text-base font-black text-slate-900 uppercase tracking-[0.4em] font-display">Consigna de trabajo</h3>
+            </div>
+            <p className="text-slate-700 text-lg md:text-xl leading-relaxed font-bold italic relative z-10">
+              {consigna}
+            </p>
+          </GlassCard>
 
           {/* Cards Row (Products) */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 w-full max-w-7xl">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 w-full max-w-7xl">
             {cards.map((card: any) => (
               <FlipCard key={card.id} {...card} icon={Briefcase} />
             ))}
